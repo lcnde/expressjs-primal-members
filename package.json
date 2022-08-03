@@ -1,0 +1,27 @@
+{
+  "name": "express-members-only",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "nodemon ./bin/www",
+    "sass": "sass --watch ./src/stylesheets:./public/stylesheets"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "mongoose": "^6.5.0",
+    "morgan": "~1.9.1",
+    "pug": "2.0.0-beta11"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "sass": "^1.54.1"
+  },
+  "description": "In package.json `sass` script is set up to monitor the whole directory and generate separate files for each file inside `src/stylesheets`.",
+  "main": "app.js",
+  "author": "",
+  "license": "ISC"
+}
