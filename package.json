@@ -20,7 +20,7 @@
     "nodemon": "^2.0.19",
     "sass": "^1.54.1"
   },
-  "description": "In package.json `sass` script is set up to monitor the whole directory and generate separate files for each file inside `src/stylesheets`.",
+  "description": "",
   "main": "app.js",
   "author": "",
   "license": "ISC"
