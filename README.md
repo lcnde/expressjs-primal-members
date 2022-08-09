@@ -25,7 +25,6 @@ Index:
 * get /
 * get /talk-board
 * get /shop
-* get /product/:product_id/:product_name
 * get /sign-in
 * get /sign-up
 * get /membership
@@ -33,6 +32,9 @@ Index:
 * post /sign-in
 * post /sign-up
 * post /log-out
+
+Product:
+* get /product/:product_id/:product_name
 
 
 
