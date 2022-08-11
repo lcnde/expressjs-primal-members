@@ -22,21 +22,6 @@ exports.shop = function (req, res) {
   });
 };
 
-exports.signIn = function (req, res) {
-  res.render('sign-in', 
-  { 
-    title: 'Sign In', 
-    stylesheetName: 'index.css' 
-  });
-};
-
-exports.signUp = function (req, res) {
-  res.render('sign-up', 
-  { 
-    title: 'Sign Up', 
-    stylesheetName: 'index.css' 
-  });
-};
 
 exports.membership = function (req, res) {
   res.render('membership', 
