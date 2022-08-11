@@ -1,0 +1,24 @@
+extends layout
+
+block stylesheet
+  //- can add a styletag to override stylesheet. The style tag will be added inside the HEAD tag.
+  //- style.
+  //-   h1 {
+  //-     color: blue;
+  //-   }
+  //- will be useful to remove background image from header on the homepage
+
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  h1 Login
+  form(action='/login/password', method='post')
+    section 
+      label(for="username") Username
+      input(type="text" id='username' name='username' autocomplete='username' required autofocus)
+    section
+      label(for="current-password") Password
+      input(type="password" id='current-password' name='password' autocomplete='current-password' required)
+    button(type='submit') Login

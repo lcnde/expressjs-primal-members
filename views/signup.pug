@@ -1,0 +1,30 @@
+extends layout
+
+block stylesheet
+  //- can add a styletag to override stylesheet. The style tag will be added inside the HEAD tag.
+  //- style.
+  //-   h1 {
+  //-     color: blue;
+  //-   }
+  //- will be useful to remove background image from header on the homepage
+
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  h1 Sign up
+  form(action="/signup" method='post')
+    section 
+      label(for="username") Username
+      input(type="text" id='username' name='username' autocomplete='username' required)
+    section
+      label(for="new-password") Password
+      input(type="password" id='new-password' name='password' maxlength='24' autocomplete='new-password' required)
+    fieldset
+      legends Are you an admin?
+      label(for='admin-yes') Yes
+      input(type='radio' id='admin-yes' name='is_admin' value='true' checked)
+      label(for='admin-no') No
+      input(type='radio' id='admin-no' name='is_admin' value='false')
+    button(type='submit') Sign Up

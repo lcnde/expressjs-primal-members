@@ -1,3 +1,6 @@
 mixin nav
   nav
-    span nav content
+    if user
+      span Welcome #{user.username}
+    else
+      span #[a(href="/login") Login], user
