@@ -15,10 +15,6 @@ router.get('/talk-board', indexController.talkBoard_get);
 
 router.get('/shop', indexController.shop);
 
-router.get('/sign-in', indexController.signIn);
-
-router.get('/sign-up', indexController.signUp);
-
 router.get('/membership', indexController.membership);
 
 router.get('/cart', indexController.cart);
