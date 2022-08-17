@@ -3,6 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
+const passport = require('passport');
+const MongoStore = require('connect-mongo');
+
+const User = require('./models/user')
 
 // configure dotenv to use database secrets
 require('dotenv').config();
@@ -15,6 +20,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error.'));
 
 const indexRouter = require('./routes/index');
+const authRouter = require('./routes/auth');
 
 var app = express();
 
@@ -28,7 +34,36 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: 'cats', // you usually want to store the secret inside an env variable so you dont expose it to the public
+  resave: false,
+  saveUninitialized: true,
+  store: MongoStore.create({
+    mongoUrl: mongoDb,
+    collectionName: 'sessions',
+  }),
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // equals 1 day = 1000 ms / 1 sec * 60 sec / 1min * 60 min / 1 hour * 24 hours / 1 day
+  },
+}));
+
+// add the passport configuration (should be added before the line that initializes passport)
+require('./config/passport');
+
+// this "refreshes" passportjs middleware every single time we load a route.
+app.use(passport.initialize());
+app.use(passport.session());
+
+/* In express, you can set and access various local variables throughout your entire app (even in views) with the locals object. We can use this knowledge to write ourselves a custom middleware that will simplify how we access our current user in our views.
+Middleware functions are simply functions that take the req and res objects, manipulate them, and pass them on through the rest of the app. 
+If you insert this code somewhere between where you instantiate the passport middleware and before you render your views, you will have access to the currentUser variable in all of your views, and you won’t have to manually pass it into all of the controllers in which you need it.*/
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user.username;
+  next();
+});
+
 app.use('/', indexRouter);
+app.use('/', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
