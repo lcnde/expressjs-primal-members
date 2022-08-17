@@ -58,7 +58,7 @@ app.use(passport.session());
 Middleware functions are simply functions that take the req and res objects, manipulate them, and pass them on through the rest of the app. 
 If you insert this code somewhere between where you instantiate the passport middleware and before you render your views, you will have access to the currentUser variable in all of your views, and you won’t have to manually pass it into all of the controllers in which you need it.*/
 app.use(function(req, res, next) {
-  res.locals.currentUser = req.user.username;
+  res.locals.currentUser = req.user;
   next();
 });
 

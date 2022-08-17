@@ -1,7 +1,6 @@
 mixin nav
   nav
     if locals.currentUser
-      span Welcome #{locals.currentUser}
+      span Welcome #{locals.currentUser.username}
     else
       span #[a(href="/login") Login], user
-  //- span #{locals.currentUser}

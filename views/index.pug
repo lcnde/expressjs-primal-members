@@ -12,3 +12,5 @@ block stylesheet
 block content
   h1= title
   p Welcome to #{title}
+  form(action="/logout" method='post')
+    button(type='submit') Logout
