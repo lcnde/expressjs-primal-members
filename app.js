@@ -62,6 +62,13 @@ app.use(function(req, res, next) {
   next();
 });
 
+// middleware used only for debugging
+app.use((req, res, next) => {
+  console.log('session', req.session);
+  console.log('user', req.user);
+  next();
+})
+
 app.use('/', indexRouter);
 app.use('/', authRouter);
 
