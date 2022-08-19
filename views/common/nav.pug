@@ -1,6 +1,20 @@
 mixin nav
   nav
-    if locals.currentUser
-      span Welcome #{locals.currentUser.username}
-    else
-      span #[a(href="/login") Login], user
+    .account  
+      if locals.currentUser
+        span Welcome #{locals.currentUser.username}
+      else
+        span #[a(href="/login") Login], User
+    .logo
+      a(href="/") 
+        img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1660812858/express-members-only/text-transparent_etxgsg.png", alt="primal logo")
+    .navigation-links
+      ul 
+        li #[a(href='#') Home]
+        li #[a(href='#') Talk-Board]
+        li #[a(href='#') Shop]
+        li.cart-container
+          a(href="#") 
+            i.bi.bi-bag
+            .number-container
+              span.number 0
