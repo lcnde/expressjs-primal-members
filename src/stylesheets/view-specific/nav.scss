@@ -3,7 +3,37 @@
 @import './global.scss';
 
 @mixin cart-container {
+  align-self:  center;
+  justify-self: end;
+  padding: 0 15px 0 0;
   
+  a {
+    color: $white;
+    position: relative;
+
+    .number-container{
+      position: absolute;
+      background-color: white;
+      border-radius: 100%;
+      color: $black;
+      bottom: -5px;
+      right: -5px;
+      height: 15px;
+      width: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .number {
+        font-weight: 600;
+        font-size: 0.9em;
+      }
+    }
+
+    .bi-bag {
+      font-size: 30px;
+    }
+  }
 }
 
 
@@ -110,39 +140,9 @@
     }
   }
 
+  // desktop version
   .cart-container {
-    align-self:  center;
-    justify-self: end;
-    padding: 0 15px 0 0;
-    
-    a {
-      color: $white;
-      position: relative;
-
-      .number-container{
-        position: absolute;
-        background-color: white;
-        border-radius: 100%;
-        color: $black;
-        bottom: -5px;
-        right: -5px;
-        height: 15px;
-        width: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .number {
-          font-weight: 600;
-          font-size: 0.9em;
-        }
-      }
-
-      .bi-bag {
-        font-size: 30px;
-      }
-    }
-    
+    @include cart-container
   }
 
   #menu-trigger {
@@ -168,8 +168,9 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
 
-    // hide on desktop
-    .mobile-menu, .mobile-nav {
+    // hide on desktop. 
+    // cart container here is refered to the desktop version located inside .navigation-links
+    .mobile-menu, .mobile-nav, .cart-container {
       display: none;
     }
   
@@ -177,6 +178,7 @@
       display: flex;
       align-items: center;
       padding: 0 20px;
+      grid-column: 1/2;
   
       a {
         color: $white;
@@ -206,6 +208,7 @@
       align-items: center;
       padding: 0 20px;
       justify-content: end;
+      grid-column: 3/4;
   
       ul {
         display: flex;
@@ -220,34 +223,12 @@
             color: $white;
           }
         }
-  
+        
+        // mobile version
         .cart-container {
-          a {
-            position: relative;
-  
-            .number-container{
-              position: absolute;
-              background-color: white;
-              border-radius: 100%;
-              color: $black;
-              bottom: -5px;
-              right: -5px;
-              height: 15px;
-              width: 15px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-  
-              .number {
-                font-weight: 600;
-                font-size: 0.9em;
-              }
-            }
-  
-            .bi-bag {
-              font-size: 30px;
-            }
-          }
+          display: block;
+
+          @include cart-container;
         }
       }
     }
