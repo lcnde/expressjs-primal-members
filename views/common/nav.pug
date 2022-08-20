@@ -1,3 +1,15 @@
+mixin link-list
+  li #[a(href='#') Home]
+  li #[a(href='#') Talk-Board]
+  li #[a(href='#') Shop]
+
+mixin cart
+  .cart-container
+    a(href="#") 
+      i.bi.bi-bag
+      .number-container
+        span.number 0
+
 mixin nav
   .navigation-container
     .account  
@@ -22,16 +34,11 @@ mixin nav
                 span Welcome #{locals.currentUser.username}
               else
                 span #[a(href="/login") Login], User
-            li #[a(href='#') Home]
-            li #[a(href='#') Talk-Board]
-            li #[a(href='#') Shop]
+            +link-list
+    +cart
     nav.navigation-links
       ul 
-        li #[a(href='#') Home]
-        li #[a(href='#') Talk-Board]
-        li #[a(href='#') Shop]
-        li.cart-container
-          a(href="#") 
-            i.bi.bi-bag
-            .number-container
-              span.number 0
+        +link-list
+        li 
+          +cart
+
