@@ -1,5 +1,5 @@
 mixin nav
-  nav
+  .navigation-container
     .account  
       if locals.currentUser
         span Welcome #{locals.currentUser.username}
@@ -8,7 +8,24 @@ mixin nav
     .logo
       a(href="/") 
         img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1660812858/express-members-only/text-transparent_etxgsg.png", alt="primal logo")
-    .navigation-links
+    .mobile-menu
+      label(class="menu-trigger-label no-select" for="menu-trigger")
+        i.bi.bi-list
+    input(type="checkbox" id="menu-trigger")
+    .mobile-nav
+        label(class="menu-trigger-label no-select" for="menu-trigger")
+          i.bi.bi-x-lg
+        nav.nav-links
+          ul 
+            li.auth
+              if locals.currentUser
+                span Welcome #{locals.currentUser.username}
+              else
+                span #[a(href="/login") Login], User
+            li #[a(href='#') Home]
+            li #[a(href='#') Talk-Board]
+            li #[a(href='#') Shop]
+    nav.navigation-links
       ul 
         li #[a(href='#') Home]
         li #[a(href='#') Talk-Board]
