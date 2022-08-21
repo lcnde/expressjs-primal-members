@@ -98,14 +98,14 @@
     z-index: 1;
     transform: translateX(-300px);
     transition: transform 0.3s ease-in-out;
+    padding: 0 0 0 30px;
 
     display: flex;
     flex-direction: column;
 
-    // select all direct child
-    > * {
-      
-    }
+    // select all direct children
+    // > * {
+    // }
 
     .menu-trigger-label {
       align-self: end;
@@ -113,20 +113,21 @@
       font-size: 20px;
     }
 
+    .auth {
+      font-size: 1.4em;
+      margin: 0 0 20px 0;
+
+      a {
+        color: $white;
+        text-decoration: underline;
+      }
+    }
+
     .nav-links {
       ul {
         display: flex;
         flex-direction: column;
-        gap: 5px;
-
-        .auth {
-          font-size: 1.4em;
-          margin: 0 0 20px 0;
-
-          a {
-            text-decoration: underline;
-          }
-        }
+        gap: 10px;
 
         li {
           font-size: 1.2em;

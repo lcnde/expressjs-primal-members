@@ -27,13 +27,13 @@ mixin nav
     .mobile-nav
         label(class="menu-trigger-label no-select cursor-pointer" for="menu-trigger")
           i.bi.bi-x-lg
+        .auth
+          if locals.currentUser
+            span Welcome #{locals.currentUser.username}
+          else
+            span #[a(href="/login") Login], User
         nav.nav-links
           ul 
-            li.auth
-              if locals.currentUser
-                span Welcome #{locals.currentUser.username}
-              else
-                span #[a(href="/login") Login], User
             +link-list
     +cart
     nav.navigation-links
