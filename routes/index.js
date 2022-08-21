@@ -9,7 +9,7 @@ const indexController = require('../controllers/index-controller');
 //   res.render('index', { title: 'Express' });
 // });
 
-router.get('/', indexController.index);
+router.get('/', indexController.home);
 
 router.get('/talk-board', indexController.talkBoard_get);
 
