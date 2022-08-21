@@ -96,7 +96,8 @@
     background-color: rgb(27, 27, 27);
     left: 0;
     z-index: 1;
-    transform: translateX(-300px);
+    margin-left: -300px;
+    transform: translateX();
     transition: transform 0.3s ease-in-out;
     padding: 0 0 0 30px;
 
@@ -151,7 +152,7 @@
   }
   // mobile nav animations
   #menu-trigger:checked ~ .mobile-nav {
-    transform: translateX(0);
+    transform: translateX(300px);
     transition: transform 0.3s ease-in-out;
   }
 
