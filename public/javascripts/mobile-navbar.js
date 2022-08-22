@@ -4,6 +4,6 @@ cb.addEventListener('click', event => {
   if (cb.checked === true) {
     document.body.classList.add('no-scrolling');
   } else {
-    document.body.classList.remove('no-scrolling')
+    document.body.classList.remove('no-scrolling');
   };
 });
