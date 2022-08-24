@@ -6,7 +6,7 @@ var logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
-const isMember = require('./config/check-member');
+const checkUtils = require('./config/check-utils');
 
 const User = require('./models/user')
 
@@ -68,8 +68,10 @@ app.use(function(req, res, next) {
   // res.locals.currentUser = {
   //   is_member: true,
   // };
-  let check = isMember(res.locals);
-  res.locals.checkMember = check;
+  let checkMember = checkUtils.isMember(res.locals);
+  res.locals.checkMember = checkMember;
+  let checkAdmin = checkUtils.isAdmin(res.locals);
+  res.locals.checkAdmin = checkAdmin;
   next();
 });
 

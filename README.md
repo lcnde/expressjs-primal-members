@@ -67,6 +67,30 @@ It is probably a good idea to send an already hashed password in the POST reques
 
 Despite this, one of the comments says that trying to login with `gmail` sends the password in plain sight in the post request. 
 
+# Check-Utils
+Check-utils is a js file that checks if the user is an `admin` or if it is a `member`. It is added inside app.js as middleware, so you can add the values to `locals` and access them inside your pugjs templates.
+It is really easy to use:
+```javascript
+const checkUtils = require(./config/check-utils);
+
+app.use(function(req, res, next) {
+  let checkMember = checkUtils.isMember(res.locals);
+  res.locals.checkMember = checkMember;
+  let checkAdmin = checkUtils.isAdmin(res.locals);
+  res.locals.checkAdmin = checkAdmin;
+  next();
+});
+```
+
+Now inside your pugjs template you can add `if` statements that will show content based on boolean values inside your locals.
+Example in pugjs:
+```pug
+if locals.checkMember
+  p user is a member
+if locals.checkAdmin
+  p user is an admin
+```
+
 # Notes
 The controller must pass the name of the `stylesheet` that the `view` will use.
 

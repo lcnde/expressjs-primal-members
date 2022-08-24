@@ -10,8 +10,11 @@ block content
     h2 EXCLUSIVE
     .content
       if locals.checkMember
-        p yes
-      //- p #{locals.checkMember}
+        p user is a member
+      if locals.checkAdmin
+        p user is an admin
+      
+      p #{locals.currentUser.username}
       p Get your membership to join our exclusive members talk-board and have access to EXTREME offers on all our products!
       a(href="/membership") BECOME ONE OF US
     a.membership-logo-container(href="/membership")
