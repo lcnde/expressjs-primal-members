@@ -6,6 +6,7 @@ var logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
+const isMember = require('./config/check-member');
 
 const User = require('./models/user')
 
@@ -64,7 +65,11 @@ app.use(function(req, res, next) {
 
 // middleware that provides a function to use inside our templates that will help with checking user authentication parameters
 app.use(function(req, res, next) {
-  res.locals.checkMember = 'abc';
+  // res.locals.currentUser = {
+  //   is_member: true,
+  // };
+  let check = isMember(res.locals);
+  res.locals.checkMember = check;
   next();
 });
 
