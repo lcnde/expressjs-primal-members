@@ -71,6 +71,28 @@ Despite this, one of the comments says that trying to login with `gmail` sends t
 Check-utils is a js file that checks if the user is an `admin` or if it is a `member`. It is added inside app.js as middleware, so you can add the values to `locals` and access them inside your pugjs templates.
 It is really easy to use:
 ```javascript
+// in config/check-utils.js
+// check if currentUser is_member and return true, else return false
+exports.isMember = function (locals) {
+  if (locals?.currentUser?.is_member === true) {
+    return true;
+  };
+  return false;
+};
+
+// check if user is admin
+exports.isAdmin = function (locals) {
+  if (locals?.currentUser?.is_admin === true) {
+    return true;
+  };
+  return false;
+}
+```
+The `?` used in the object names is called "Optional chaining". [More on optional chaining in this DMN article.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining)
+
+
+```javascript
+// in app.js
 const checkUtils = require(./config/check-utils);
 
 app.use(function(req, res, next) {
@@ -85,11 +107,14 @@ app.use(function(req, res, next) {
 Now inside your pugjs template you can add `if` statements that will show content based on boolean values inside your locals.
 Example in pugjs:
 ```pug
+// in home.pug
 if locals.checkMember
   p user is a member
 if locals.checkAdmin
   p user is an admin
 ```
+
+This system was made because if the user was not logged in and you checked for `locals.currentUser.is_member` the server was giving an error because you cant check the value (in this case `is_member`) of an undefined object (in this case `currentUser` since the user was not logged in).
 
 # Notes
 The controller must pass the name of the `stylesheet` that the `view` will use.
