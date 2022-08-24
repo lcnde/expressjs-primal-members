@@ -62,6 +62,12 @@ app.use(function(req, res, next) {
   next();
 });
 
+// middleware that provides a function to use inside our templates that will help with checking user authentication parameters
+app.use(function(req, res, next) {
+  res.locals.checkMember = 'abc';
+  next();
+});
+
 // middleware used only for debugging
 app.use((req, res, next) => {
   console.log('session', req.session);

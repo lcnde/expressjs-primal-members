@@ -18,7 +18,7 @@ exports.shop = function (req, res) {
   res.render('shop', 
   { 
     title: 'shop', 
-    stylesheetName: 'index.css' 
+    stylesheetName: 'shop.css' 
   });
 };
 

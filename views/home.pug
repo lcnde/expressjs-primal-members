@@ -1,22 +1,31 @@
 extends layout
 
-block stylesheet
-  //- can add a styletag to override stylesheet. The style tag will be added inside the HEAD tag.
-  //- style.
-  //-   h1 {
-  //-     color: blue;
-  //-   }
-  //- will be useful to remove background image from header on the homepage
-  style.
-    //- nav {
-    //-   background-image: none;
-    //-   box-shadow: none;
-    //- }
-
-
-
 block content
-  h1= title
-  p Welcome to #{title}
-  form(action="/logout" method='post')
-    button(type='submit') Logout
+  .banner.section
+    .content
+      .logo
+        img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1660812858/express-members-only/text-transparent_etxgsg.png", alt="primal logo")
+      a.membership-button(href="/membership") GET MEMBERSHIP
+  .membership-exclusive.section
+    h2 EXCLUSIVE
+    .content
+      p Get your membership to join our exclusive members talk-board and have access to EXTREME offers on all our products!
+      a(href="/membership") BECOME ONE OF US
+    a.membership-logo-container(href="/membership")
+      img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
+  .presentation.section
+    .content
+      h3 You're in good hands
+      p Wether you're a beginner or you have several years of experience, you will have a team of trained professionals capable of helping you achieve your muscle, diet and aesthetics goals in the most efficient way possible.
+    .img-container
+      img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661161049/express-members-only/personal-trainer_rjjzbz.jpg", alt="personal trainer smiling, holding a writing clip board")
+  .shop-banner.section
+      .logo
+        img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1660812858/express-members-only/text-transparent_etxgsg.png", alt="primal logo")
+      p Get your membership and have access to discounts for our line of products that will unleash the beast in you, BE STRONG!
+      a.shop-button(href="/shop") PRIMAL SHOP
+
+  //- h1= title
+  //- p Welcome to #{title}
+  //- form(action="/logout" method='post')
+  //-   button(type='submit') Logout

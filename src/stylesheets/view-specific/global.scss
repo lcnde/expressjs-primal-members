@@ -11,8 +11,28 @@ html * {
   font-family: 'Montserrat', sans-serif;
 }
 
+html {
+  overflow-x: hidden;
+}
+
+body {
+  width: 100vw;
+  min-width: 100vw;
+}
+
+// font sizes
+h2 {
+  font-size: 3em;
+  font-family: 'Fugaz One', cursive;
+}
+h3 {
+  font-size: 2em;
+  font-family: 'Fugaz One', cursive;
+} 
+
 // remove blue highlight when clicking elements from phone
-.no-select {
+// make all images unselectable
+.no-select, img {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
