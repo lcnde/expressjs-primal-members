@@ -65,8 +65,11 @@ app.use(function(req, res, next) {
 
 // middleware that provides a function to use inside our templates that will help with checking user authentication parameters
 app.use(function(req, res, next) {
-  // res.locals.currentUser = {
+  // pass the user only for debugging
+  // res.locals.currentUser ={
+  //   username: 'abc',
   //   is_member: true,
+  //   is_admin: true,
   // };
   let checkMember = checkUtils.isMember(res.locals);
   res.locals.checkMember = checkMember;

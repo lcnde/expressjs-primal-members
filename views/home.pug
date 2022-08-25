@@ -9,14 +9,14 @@ block content
   .membership-exclusive.section
     h2 EXCLUSIVE
     .content
-      if locals.checkMember
-        p user is a member
-      if locals.checkAdmin
-        p user is an admin
+      if locals.currentUser && locals.checkMember
+        p Use all the perks that come with your membership! Access members talk-board to find gym bros and get EXTREME offers on all our products!
+        a(href="/talk-board") TALK-BOARD
+      else 
+        p Get your membership to join our exclusive members talk-board and have access to EXTREME offers on all our products!
+        a(href="/membership") BECOME ONE OF US
       
-      p #{locals.currentUser.username}
-      p Get your membership to join our exclusive members talk-board and have access to EXTREME offers on all our products!
-      a(href="/membership") BECOME ONE OF US
+      //- p #{locals.currentUser.username}
     a.membership-logo-container(href="/membership")
       img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
   .presentation.section
