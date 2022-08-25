@@ -41,13 +41,14 @@ Product:
 
 # Using Include and Mixins
 Using only `include` will not allow you to use variables.
-Using `include` and then using a mixin from the page you included will allow you to use variables that you can pass inside the mixin.
+Using `include` and then using a mixin from the page you included will allow you to use variables that you can pass inside the mixin. (This was originally intended to be used to pass stylesheets but I opted to pass them with the controller.)
 
 # How navbar works
 Navbar has to be transparent on the main page, but it has to have a background image on the rest of the website. 
-It can be included using a mixin with a variable. If you pass a "deactivaiton" variable inside the mixin, then the header background will not show. If you don't pass anything inside the mixin then the header background will be present.
-OR
-Since you will only need this behavior inside the homepage, you can add a style tag that will set the background image of the header to null only inside the homepage
+
+~~It can be included using a mixin with a variable. If you pass a "deactivaiton" variable inside the mixin, then the header background will not show. If you don't pass anything inside the mixin then the header background will be present.~~
+
+Since you will only need this behavior inside the homepage, you can add a style tag that will set the background image of the header to null only inside the homepage.
 
 # Sessions
 [Source to learn about sessions](https://www.youtube.com/watch?v=F-sFp_AvHc8).
@@ -66,6 +67,8 @@ It is probably a good idea to send an already hashed password in the POST reques
 [Source](https://stackoverflow.com/questions/3391242/should-i-hash-the-password-before-sending-it-to-the-server-side)
 
 Despite this, one of the comments says that trying to login with `gmail` sends the password in plain sight in the post request. 
+
+This website will send the password in plain text, but I'm not sure if this is a good idea for a real website.
 
 # Check-Utils
 Check-utils is a js file that checks if the user is an `admin` or if it is a `member`. It is added inside app.js as middleware, so you can add the values to `locals` and access them inside your pugjs templates.
@@ -120,14 +123,17 @@ This system was made because if the user was not logged in and you checked for `
 The controller must pass the name of the `stylesheet` that the `view` will use.
 
 # Resources used for this project
-[The Oding Project Assignment](https://www.theodinproject.com/lessons/nodejs-members-only).
+[The Odin Project Assignment](https://www.theodinproject.com/lessons/nodejs-members-only).
+
 [The Odin Project Authentication Basics](https://www.theodinproject.com/lessons/nodejs-authentication-basics).
+
 [Passport Documentation](https://www.passportjs.org/tutorials/password/).
 
 Notes on what [saveUninitialized](https://github.com/expressjs/session/issues/273) from passportjs documentation is used for.
 
-[Passportjs session and initialize resource 1](https://stackoverflow.com/questions/46644366/what-is-passport-initialize-nodejs-express)
-[Passportjs session and initialize resource 2](https://stackoverflow.com/questions/22052258/what-does-passport-session-middleware-do/28994045#28994045)
+[Passportjs session and initialize resource 1](https://stackoverflow.com/questions/46644366/what-is-passport-initialize-nodejs-express).
+
+[Passportjs session and initialize resource 2](https://stackoverflow.com/questions/22052258/what-does-passport-session-middleware-do/28994045#28994045).
 
 
 [This video](https://www.youtube.com/watch?v=F-sFp_AvHc8) in particular was really helpful to get a good understanding of the big picture of how things work.
