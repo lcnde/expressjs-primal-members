@@ -10,7 +10,7 @@ exports.talkBoard_get = function (req, res) {
   res.render('talk-board',
   {
     title: 'talkboard',
-    stylesheetName: 'index.css'
+    stylesheetName: 'talkboard.css'
   });
 };
 
@@ -27,7 +27,7 @@ exports.membership = function (req, res) {
   res.render('membership', 
   { 
     title: 'membership', 
-    stylesheetName: 'index.css' 
+    stylesheetName: 'membership.css' 
   });
 };
 

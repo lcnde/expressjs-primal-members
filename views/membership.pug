@@ -10,5 +10,28 @@ block stylesheet
 
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .content
+    h1 GET YOUR MEMBERSHIP
+    .welcome
+      p.quote "If you want something you've never had, you must be willing to do something you've never done"
+      p Welcome, this is your first step of a lifelong journey. Getting a gym membership is more than just lifting weights. You become part of something bigger, you become part of the ELITE. You, through passion and discipline, will achieve great things.
+      p - Sincerely, the Primal Staff.
+    .info
+      if !locals.currentUser
+        .not-logged.membership-info-section
+          span You need an account before you can get a Membership.
+          a(href='/signup') Create an account
+      else if locals.currentUser && !locals.checkMember
+        .not-member.membership-info-section
+          form(action="/membership" method='post')
+            label(for="passcode") Insert passcode
+            input(type="text" id='passcode' name='passcode' placeholder='Hint: it\'s "Primal"') 
+            button(type='submit') Become a member
+      else if locals.currentUser && locals.checkMember
+        .member.membership-info-section
+          span You are already a proud member of Primal.
+          form(action='/cancel-membership' method='post')
+            button(type='submit') Cancel Membership
+
+  
+
