@@ -10,21 +10,23 @@ block stylesheet
 
 
 block content
-  h1= title
-  p Welcome to #{title}
-
-  h1 Sign up
-  form(action="/signup" method='post')
-    section 
-      label(for="username") Username
-      input(type="text" id='username' name='username' autocomplete='username' required)
-    section
-      label(for="new-password") Password
-      input(type="password" id='new-password' name='password' maxlength='24' autocomplete='new-password' required)
-    fieldset
-      legends Are you an admin?
-      label(for='admin-yes') Yes
-      input(type='radio' id='admin-yes' name='is_admin' value='true' checked)
-      label(for='admin-no') No
-      input(type='radio' id='admin-no' name='is_admin' value='false')
-    button(type='submit') Sign Up
+  .content
+    .center
+      h1 Sign up
+      form(action="/signup" method='post')
+        section 
+          label(for="username") Username
+          input.global-input(type="text" id='username' name='username' autocomplete='username' required)
+        section
+          label(for="new-password") Password
+          input.global-input(type="password" id='new-password' name='password' maxlength='24' autocomplete='new-password' required)
+        fieldset.admin-section
+          legends Are you an admin?
+          div.section
+            div
+              label(for='admin-yes') Yes
+              input(type='radio' id='admin-yes' name='is_admin' value='true' checked)
+            div
+              label(for='admin-no') No
+              input(type='radio' id='admin-no' name='is_admin' value='false')
+        button(type='submit') Sign Up
