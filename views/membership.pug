@@ -25,7 +25,7 @@ block content
         .not-member.membership-info-section
           form(action="/membership" method='post')
             label(for="passcode") Insert passcode
-            input(type="text" id='passcode' name='passcode' placeholder='Hint: it\'s "Primal"') 
+            input.global-input(type="text" id='passcode' name='passcode' placeholder='Hint: it\'s "Primal"') 
             button(type='submit') Become a member
       else if locals.currentUser && locals.checkMember
         .member.membership-info-section

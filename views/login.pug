@@ -10,17 +10,16 @@ block stylesheet
 
 
 block content
-  h1= title
-  p Welcome to #{title}
-
-  h1 Login
-  form(action='/login/password', method='post')
-    section 
-      label(for="username") Username
-      input(type="text" id='username' name='username' autocomplete='username' required autofocus)
-    section
-      label(for="current-password") Password
-      input(type="password" id='current-password' name='password' autocomplete='current-password' required)
-    button(type='submit') Login
-  div
-    p Don't have an account? #[a(href="/signup") Sign Up].
+  .content
+    .center
+      h1 Login
+      form(action='/login/password', method='post')
+        section 
+          label(for="username") Username
+          input.global-input(type="text" id='username' name='username' autocomplete='username' required autofocus)
+        section
+          label(for="current-password") Password
+          input.global-input(type="password" id='current-password' name='password' autocomplete='current-password' required)
+        button.global-button(type='submit') Login
+      .sign-up
+        p Don't have an account? #[a(href="/signup") Sign Up].
