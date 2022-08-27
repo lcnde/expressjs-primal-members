@@ -6,13 +6,6 @@ exports.home = function (req, res) {
     });
 };
 
-exports.talkBoard_get = function (req, res) {
-  res.render('talk-board',
-  {
-    title: 'talkboard',
-    stylesheetName: 'talkboard.css'
-  });
-};
 
 exports.shop = function (req, res) {
   res.render('shop', 

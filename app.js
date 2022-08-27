@@ -44,6 +44,7 @@ app.use(session({
     collectionName: 'sessions',
   }),
   cookie: {
+    // thanks to maxAge I'm pretty sure that MongoDB is deleting expired sessions from the database
     maxAge: 1000 * 60 * 60 * 24, // equals 1 day = 1000 ms / 1 sec * 60 sec / 1min * 60 min / 1 hour * 24 hours / 1 day
   },
 }));
@@ -66,11 +67,12 @@ app.use(function(req, res, next) {
 // middleware that provides a function to use inside our templates that will help with checking user authentication parameters
 app.use(function(req, res, next) {
   // pass the user only for debugging
-  // res.locals.currentUser ={
-  //   username: 'abc',
-  //   is_member: true,
-  //   is_admin: true,
-  // };
+  res.locals.currentUser ={
+    username: 'Adam Monke',
+    is_member: true,
+    is_admin: true,
+  };
+  // utility functions (check README to see what they do)
   let checkMember = checkUtils.isMember(res.locals);
   res.locals.checkMember = checkMember;
   let checkAdmin = checkUtils.isAdmin(res.locals);
@@ -80,8 +82,9 @@ app.use(function(req, res, next) {
 
 // middleware used only for debugging
 app.use((req, res, next) => {
-  console.log('session', req.session);
-  console.log('user', req.user);
+  // console.log('session', req.session);
+  // console.log('user', req.user);
+  console.log('sessionID:', req.sessionID);
   next();
 })
 
