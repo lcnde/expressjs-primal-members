@@ -66,7 +66,7 @@ Here is how a cookie looks for this website:
 ```
 s%3AxT4yThG0x15_LlYKs8iGtDo2U18KYz3Q.Ze1kjKU2ylfCjy8IhfjK36z6HHdGPfYuVPJVvJ%2Bmr88
 ```
-Where `xT4yThG0x15_LlYKs8iGtDo2U18KYz3Q` is the session ID. The stuff after the `.` is information stored inside the cookie.
+Where `xT4yThG0x15_LlYKs8iGtDo2U18KYz3Q` is the session ID.
 
 When you first visit the site you will get a cookie and the session is created inside MongoDB. A session of a non-logged-in user will look like this:
 ```
