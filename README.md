@@ -110,7 +110,7 @@ exports.isAdmin = function (locals) {
   return false;
 }
 ```
-The `?` used in the object names is called "Optional chaining". [More on optional chaining in this DMN article.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining)
+The `?` used in the object names is called "Optional chaining". [More on optional chaining in this MDN article.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining)
 
 
 ```javascript

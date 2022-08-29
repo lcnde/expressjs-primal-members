@@ -67,11 +67,12 @@ app.use(function(req, res, next) {
 // middleware that provides a function to use inside our templates that will help with checking user authentication parameters
 app.use(function(req, res, next) {
   // pass the user only for debugging
-  res.locals.currentUser ={
-    username: 'Adam Monke',
-    is_member: true,
-    is_admin: true,
-  };
+  // res.locals.currentUser ={
+  //   username: 'Adam Monke',
+  //   password: 'legit-member123',
+  //   is_member: true,
+  //   is_admin: true,
+  // };
   // utility functions (check README to see what they do)
   let checkMember = checkUtils.isMember(res.locals);
   res.locals.checkMember = checkMember;
@@ -82,9 +83,9 @@ app.use(function(req, res, next) {
 
 // middleware used only for debugging
 app.use((req, res, next) => {
-  // console.log('session', req.session);
+  console.log('session', req.session);
   // console.log('user', req.user);
-  console.log('sessionID:', req.sessionID);
+  // console.log('sessionID:', req.sessionID);
   next();
 })
 
