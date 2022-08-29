@@ -61,6 +61,25 @@ When a client makes an http request to the server:
 5. The browser is going to receive it, set the cookie, and every time the client refreshes the page the cookie will be part of that request.
 6. The server recognizes the cookie present in the request and is going to provide the data from the session attached to that cookie.
 
+The cookie has 2 parts: the first part corresponds to the session ID.
+Here is how a cookie looks for this website:
+```
+s%3AxT4yThG0x15_LlYKs8iGtDo2U18KYz3Q.Ze1kjKU2ylfCjy8IhfjK36z6HHdGPfYuVPJVvJ%2Bmr88
+```
+Where `xT4yThG0x15_LlYKs8iGtDo2U18KYz3Q` is the session ID. The stuff after the `.` is information stored inside the cookie.
+
+When you first visit the site you will get a cookie and the session is created inside MongoDB. A session of a non-logged-in user will look like this:
+```
+{"_id":"w4N93-XTG1rUf3xaLg7wLOTpGJAPrwJK","expires":{"$date":{"$numberLong":"1661785870549"}},"session":"{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2022-08-29T15:11:10.549Z\",\"httpOnly\":true,\"path\":\"/\"}}"}
+```
+So there is no correlation with Users stored inside the database.
+
+When a user does the Log-in its session will look like this:
+```
+{"_id":"BwEtAifecWthNUO2q6IRyXBF-0vruhA5","expires":{"$date":{"$numberLong":"1661840985143"}},"session":"{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2022-08-30T06:29:43.906Z\",\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":\"62fc78ea30294ab9b4c0f27e\"}}"}
+```
+So a `passport` object will be added with the User ID.
+
 # Handling the password
 It is probably a good idea to send an already hashed password in the POST request in the user signup and login. This is because HTTPS is indeed secure, but it is not bulletproof, and it is never a good idea to send a password in plain-text.
 
