@@ -8,6 +8,8 @@ block content
         p Hello #{locals.currentUser.username}, what do you want to share today?
         form(action='/message' method='post')
           textarea.global-input(name="message" id='message' cols="30" rows="10")
+          if err
+            p #{err[0].msg}
           button.global-button(type='submit') Post Message
       else
         p Get your membership and take advantage of our exclusive talk-board where you can meet other gym bros or ask for advice.

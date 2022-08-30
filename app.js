@@ -83,7 +83,7 @@ app.use(function(req, res, next) {
 
 // middleware used only for debugging
 app.use((req, res, next) => {
-  console.log('session', req.session);
+  // console.log('session', req.session);
   // console.log('user', req.user);
   // console.log('sessionID:', req.sessionID);
   next();

@@ -1,11 +1,12 @@
-const Message = require('../models/message');
 const { body, validationResult } = require('express-validator');
 
-const User = require('../models/user')
+const User = require('../models/user');
+const Message = require('../models/message');
 
 exports.talkBoard_get = function (req, res) {
   res.render('talk-board',
   {
+    err: errors.array(),
     title: 'talkboard',
     stylesheetName: 'talkboard.css'
   });
@@ -21,13 +22,38 @@ exports.message_post = [
 
   // process request after validation and sanitization
   (req, res, next) => {
+
+    //check for errors
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      // there are errors so reload the page with the errors
+      res.render('talk-board',
+      {
+        err: errors.array(),
+        title: 'talkboard',
+        stylesheetName: 'talkboard.css'
+      });
+      return;
+    }
     // console.log(req.session.passport.user)
     User.findOne({ id: req.session.passport.user }, (err, user) => {
       if (err) {
         return next(err);
       };
 
-      // user_id exists in the database
+      // success, user exists in the database
+      // create the message 
+      const message = new Message(
+        {
+          author: user.id,
+          message: req.body.message,
+          // date: new Date(Date.now()).toDateString(),
+          date: new Date(Date.now()),
+        }
+      )
+      
+      
     })
     
     res.redirect('/talk-board');
