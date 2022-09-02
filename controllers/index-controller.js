@@ -1,8 +1,7 @@
 exports.home = function (req, res) {
   res.render('home', 
     { 
-      title: 'Primal', 
-      stylesheetName: 'home.css' 
+      title: 'Primal'
     });
 };
 
@@ -10,8 +9,7 @@ exports.home = function (req, res) {
 exports.shop = function (req, res) {
   res.render('shop', 
   { 
-    title: 'shop', 
-    stylesheetName: 'shop.css' 
+    title: 'shop'
   });
 };
 
@@ -19,15 +17,13 @@ exports.shop = function (req, res) {
 exports.membership = function (req, res) {
   res.render('membership', 
   { 
-    title: 'membership', 
-    stylesheetName: 'membership.css' 
+    title: 'membership'
   });
 };
 
 exports.cart = function (req, res) {
   res.render('cart', 
   { 
-    title: 'Cart', 
-    stylesheetName: 'index.css' 
+    title: 'Cart'
   });
 };
