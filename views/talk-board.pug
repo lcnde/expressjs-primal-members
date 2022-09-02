@@ -6,11 +6,13 @@ block stylesheet
 block content
   .content
     .create
-      h1 TALK-BOARD
+      h1 TALK-BOARD #{message}
       if locals.currentUser && locals.checkMember
         p Hello #{locals.currentUser.username}, what do you want to share today?
         form(action='/message' method='post')
           textarea.global-input(name="message" id='message' cols="30" rows="10")
+            if message !== undefined
+              | #{message}
           if err
             p #{err[0].msg}
           button.global-button(type='submit') Post Message

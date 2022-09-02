@@ -6,9 +6,7 @@ const Message = require('../models/message');
 exports.talkBoard_get = function (req, res) {
   res.render('talk-board',
   {
-    err: errors.array(),
-    title: 'talkboard',
-    stylesheetName: 'talkboard.css'
+    title: 'talkboard'
   });
 };
 
@@ -17,6 +15,7 @@ exports.message_post = [
   // validate and sanitize
   body('message')
     .not().isEmpty().withMessage('Message can not be empty.')
+    // .isLength({max: 3}).withMessage('just a test delete this')
     .trim()
     .escape(),
 
@@ -26,23 +25,28 @@ exports.message_post = [
     //check for errors
     const errors = validationResult(req);
 
+    // save the message content so if the page reloads you can serve it back to the user
+    var messageContent = req.body.message
+
     if (!errors.isEmpty()) {
       // there are errors so reload the page with the errors
       res.render('talk-board',
       {
         err: errors.array(),
         title: 'talkboard',
-        stylesheetName: 'talkboard.css'
+        message: messageContent
       });
       return;
     }
-    // console.log(req.session.passport.user)
+
+    // success, no errors found
+    // console.log(req.session.passport.user);
     User.findOne({ id: req.session.passport.user }, (err, user) => {
       if (err) {
         return next(err);
       };
-
       // success, user exists in the database
+
       // create the message 
       const message = new Message(
         {
@@ -51,11 +55,20 @@ exports.message_post = [
           // date: new Date(Date.now()).toDateString(),
           date: new Date(Date.now()),
         }
-      )
+      );
+
+      message.save(function(err) {
+        if (err) {
+          return next(err);
+        };
+
+        res.render('talk-board', {
+          title: 'talkboard',
+        })
+      })
+
+            
       
-      
-    })
-    
-    res.redirect('/talk-board');
+    });
   }
 ]
