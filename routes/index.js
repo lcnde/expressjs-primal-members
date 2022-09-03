@@ -14,17 +14,22 @@ router.get('/', indexController.home);
 
 router.get('/shop', indexController.shop);
 
-router.get('/membership', indexController.membership);
 
 router.get('/cart', indexController.cart);
 
 
-// talkboard routes
+// TALKBOARD
 router.get('/talk-board', messageController.talkBoard_get);
 
 router.post('/message-post', messageController.message_post);
 
 router.post('/message-delete', messageController.message_delete_post);
+
+
+// MEMBERSHIP
+router.get('/membership', indexController.membership);
+
+router.post('/membership-join', indexController.membership_join);
 
 
 

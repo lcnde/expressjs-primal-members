@@ -18,10 +18,12 @@ block content
           a(href='/signup') Create an account
       else if locals.currentUser && !locals.checkMember
         .not-member.membership-info-section
-          form(action="/membership" method='post')
+          form(action="/membership-join" method='post')
             label(for="passcode") Insert passcode
             input.global-input(type="text" id='passcode' name='passcode' placeholder='Hint: it\'s "Primal"') 
             button(type='submit') Become a member
+          if err
+            span.error #{err}
       else if locals.currentUser && locals.checkMember
         .member.membership-info-section
           span You are already a proud member of Primal.
