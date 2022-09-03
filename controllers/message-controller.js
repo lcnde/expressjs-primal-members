@@ -71,13 +71,44 @@ exports.message_post = [
           return next(err);
         };
 
-        res.render('talk-board', {
-          title: 'talkboard',
-        })
+        res.redirect('talk-board');
       })
 
             
       
     });
   }
-]
+];
+
+exports.message_delete_post = (req, res, next) => {
+  // only admins can delete messages, so check that the user is an admin before allowing that
+  console.log('CONTROLLER USER', req.session.passport)
+  User.findById( req.session.passport.user )
+    .exec((err, user) => {
+      
+      if (err) {
+        return next(err);
+      };
+      // success, user exists
+      if (user.is_admin === true) {
+        Message.findByIdAndRemove(req.body.message_id)
+          .exec(function(err, result) {
+            if (err) {
+              return next(err);
+            };
+            // success so render
+            res.redirect('/talk-board');
+          });
+          return;
+      }
+  
+      // user is not an admin, reject and render errors
+      // const errors = ['You are not allowed to do that.']
+      // res.render('talk-board', {
+      //   title: 'talkboard',
+      //   err: errors,
+      // })
+      res.redirect('/talk-board')
+    })
+
+}

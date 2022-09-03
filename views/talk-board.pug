@@ -9,7 +9,7 @@ block content
       h1 TALK-BOARD #{message}
       if locals.currentUser && locals.checkMember
         p Hello #{locals.currentUser.username}, what do you want to share today?
-        form(action='/message' method='post')
+        form(action='/message-post' method='post')
           textarea.global-input(name="message" id='message' cols="30" rows="10")
             if message !== undefined
               | #{message}
@@ -20,20 +20,23 @@ block content
         p Get your membership and take advantage of our exclusive talk-board where you can meet other gym bros or ask for advice.
         a(href="/membership") BECOME ONE OF US 
     .messages-container
-      each message in messages
+      each mess in messages
         .message
           .head
             .username-container
               .img-container
                 img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
-              span.username #{message.author.username}
+              span.username #{mess.author.username}
           .body
             .message-content
-              p #{message.message}
+              p #{mess.message}
             .date-container
-              span.date #{message.date}
-              .delete-button 
-                i.bi.bi-trash
+              span.date #{mess.date}
+              form.delete-button(action='/message-delete' method='post')
+                input.display-none(type='text' name='message_id' value=mess.id)
+                button(type='submit') 
+                  i.bi.bi-trash
+
 
 
         

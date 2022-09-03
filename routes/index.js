@@ -18,10 +18,13 @@ router.get('/membership', indexController.membership);
 
 router.get('/cart', indexController.cart);
 
+
 // talkboard routes
 router.get('/talk-board', messageController.talkBoard_get);
 
-router.post('/message', messageController.message_post);
+router.post('/message-post', messageController.message_post);
+
+router.post('/message-delete', messageController.message_delete_post);
 
 
 

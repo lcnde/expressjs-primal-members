@@ -105,6 +105,11 @@
           .delete-button {
             font-size: 30px;
             color: $red;
+
+            button {
+              cursor: pointer;
+              color: inherit;
+            }
           }
         }
       }
