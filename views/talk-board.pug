@@ -20,30 +20,20 @@ block content
         p Get your membership and take advantage of our exclusive talk-board where you can meet other gym bros or ask for advice.
         a(href="/membership") BECOME ONE OF US 
     .messages-container
-      .message
-        .head
-          .username-container
-            .img-container
-              img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
-            span.username Adam Monke
-        .body
-          .message-content
-            p Get your membership today Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo quidem, voluptatum in repudiandae maxime quibusdam aut rerum necessitatibus ipsa dolorum esse culpa sapiente ut? Reiciendis accusantium incidunt exercitationem. Assumenda, quas.
-          .date-container
-            span.date 11:04 AM 04-05-2022
-            .delete-button 
-              i.bi.bi-trash
-      .message
-        .head
-          .username-container
-            .img-container
-              img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
-            span.username Adam Monke
-        .body
-          .message-content
-            p wyd
-          .date-container
-            span.date 11:04 AM 04-05-2022
-            .delete-button 
-              i.bi.bi-trash
+      each message in messages
+        .message
+          .head
+            .username-container
+              .img-container
+                img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
+              span.username #{message.author.username}
+          .body
+            .message-content
+              p #{message.message}
+            .date-container
+              span.date #{message.date}
+              .delete-button 
+                i.bi.bi-trash
+
+
         
