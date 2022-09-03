@@ -31,6 +31,8 @@ router.get('/membership', indexController.membership);
 
 router.post('/membership-join', indexController.membership_join);
 
+router.post('/membership-delete', indexController.membership_delete)
+
 
 
 module.exports = router;

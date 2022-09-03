@@ -27,7 +27,7 @@ block content
       else if locals.currentUser && locals.checkMember
         .member.membership-info-section
           span You are already a proud member of Primal.
-          form(action='/cancel-membership' method='post')
+          form(action='/membership-delete' method='post')
             button(type='submit') Cancel Membership
 
   

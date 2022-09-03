@@ -62,3 +62,16 @@ exports.membership_join = function (req, res, next) {
       });
     });
 };
+
+exports.membership_delete = function (req, res, next) {
+  // check if user exists
+  User.findByIdAndUpdate(req.session.passport.user, {
+    is_member: false,
+  }, (err, user) => {
+    if (err) {
+      return next(err);
+    };
+
+    res.redirect('/membership');
+  });
+}
