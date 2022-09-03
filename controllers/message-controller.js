@@ -82,7 +82,6 @@ exports.message_post = [
 
 exports.message_delete_post = (req, res, next) => {
   // only admins can delete messages, so check that the user is an admin before allowing that
-  console.log('CONTROLLER USER', req.session.passport)
   User.findById( req.session.passport.user )
     .exec((err, user) => {
       
@@ -91,6 +90,7 @@ exports.message_delete_post = (req, res, next) => {
       };
       // success, user exists
       if (user.is_admin === true) {
+        // user is admin, remove message
         Message.findByIdAndRemove(req.body.message_id)
           .exec(function(err, result) {
             if (err) {
@@ -108,6 +108,8 @@ exports.message_delete_post = (req, res, next) => {
       //   title: 'talkboard',
       //   err: errors,
       // })
+
+      // redirect bcause user is not an admin and doesnt have permission to delete messages
       res.redirect('/talk-board')
     })
 

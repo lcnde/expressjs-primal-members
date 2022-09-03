@@ -32,10 +32,11 @@ block content
               p #{mess.message}
             .date-container
               span.date #{mess.date}
-              form.delete-button(action='/message-delete' method='post')
-                input.display-none(type='text' name='message_id' value=mess.id)
-                button(type='submit') 
-                  i.bi.bi-trash
+              if locals.currentUser && locals.checkAdmin
+                form.delete-button(action='/message-delete' method='post')
+                  input.display-none(type='text' name='message_id' value=mess.id)
+                  button(type='submit') 
+                    i.bi.bi-trash
 
 
 
