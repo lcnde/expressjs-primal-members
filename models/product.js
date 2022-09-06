@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 const ProductSchema = new Schema(
   {
     name: {type: String, required: true},
-    price: {type: Double, required: true},
-    members_price: {type: Double, required: true},
+    price: {type: Number, required: true},
+    members_price: {type: Number, required: true},
     description: {type: String, required: true},
     photo_url: {type: String, required: true},
     flavor: [{type: Schema.Types.ObjectId, ref: 'Flavor', required: true}],
@@ -14,4 +14,4 @@ const ProductSchema = new Schema(
   }
 );
 
-module.exports = mongoose.mode('Product', ProductSchema);
+module.exports = mongoose.model('Product', ProductSchema);
