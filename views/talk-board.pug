@@ -26,7 +26,10 @@ block content
             .username-container
               .img-container
                 img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
-              span.username #{mess.author.username}
+              if locals.currentUser && locals.checkMember
+                span.username #{mess.author.username}
+              else
+                span.username.no-member Only members can see usernames
           .body
             .message-content
               p #{mess.message}
