@@ -23,22 +23,20 @@ const flavorsArray = [];
 // function to create the individual product
 const productCreate = (
   name, 
-  price, 
-  members_price, 
+  option,
   description, 
   photo_url, 
   flavor, 
-  option,
   callback) => {
 
     const productDetails = {
       name: name,
-      price: price,
-      members_price: members_price,
+      option: option,
+      // price: price,
+      // members_price: members_price,
       description: description,
       photo_url: photo_url,
       flavor: flavor,
-      option: option
     };
 
     const product = new Product(productDetails);
@@ -128,33 +126,80 @@ const createProducts = (cb) => {
     function(done) {
       productCreate(
         'Isolate Protein MEC',
-        39.99,
-        29.99,
+        [
+          {
+            quantity: '1kg',
+            cost: {
+              price: 19.99,
+              members_price: 13.99
+            }
+          },
+          {
+            quantity: '5kg',
+            cost: {
+              price: 79.99,
+              members_price: 60.99
+            }
+          },
+        ],
         `Iso Intense MEC is an instantized whey protein isolate extracted from sweet dairy whey. Proprietary membrane techniques are used to yield a highly pure, nutritionally superior and undenatured isolate protein. It goes through an instantizing process that allows it to disperse easily in Milk and other beverages.
         Infusion of the Multi-enzyme complex (MEC) makes it easier to digest, thus it gets absorbed faster in our body. Its delicious flavor profile, high protein content, and low lactose and fat levels makes it the protein of choice for many beverage applications.`,
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472356/express-members-only/products/iso_abqvly.png',
         flavorsArray,
-        ['1kg', '5kg'],
         done
       );
     },
     function(done) {
       productCreate(
         'L-Glutamine',
-        27.50,
-        16.99,
+        [
+          {
+            quantity: '100g',
+            cost: {
+              price: 19.99,
+              members_price: 13.99
+            }
+          },
+          {
+            quantity: '300g',
+            cost: {
+              price: 29.99,
+              members_price: 23.99
+            }
+          },
+        ],
         `L-glutamine is the most abundant amino acid in the blood and in muscle cells. It is classified as a conditionally essential amino acid, which means that the body is normally capable of manufacturing enough to meet its metabolic needs. Glutamine has several functions including the support of immunity, gastrointestinal integrity, insulin secretion, neurological activity, and muscle protein synthesis. Glutamine actually supplies 35% of nitrogen to muscles to synthesise proteins. This, in turn, will promote protein synthesis. Why is this important? Well, the benefits of maintaining a high nitrogen balance in the muscle prevents muscle breakdown, therefore retaining more muscle. This equates to a leaner you! A leaner you means you have less body fat, so, in essence, glutamine may help with the reduction of overall body fat.`,
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472352/express-members-only/products/glutamine_szx2nk.png',
         flavorsArray,
-        ['100mg', '300mg'],
         done
       );
     },
     function(done) {
       productCreate(
         'Intense Gainer',
-        70.00,
-        61.89,
+        [
+          {
+            quantity: '100g',
+            cost: {
+              price: 19.99,
+              members_price: 13.99
+            }
+          },
+          {
+            quantity: '300g',
+            cost: {
+              price: 32.00,
+              members_price: 25.99
+            }
+          },
+          {
+            quantity: '500g',
+            cost: {
+              price: 56.00,
+              members_price: 40.27
+            }
+          }
+        ],
         `BCAA offers a unique ratio - 2 Leucine, 1 Isoleucine, 1 Valine - that is specifically tuned to deliver the ideal amounts of these three amino acids during all phases of muscle development and maintenance. Through this formulation, amino acids are released both before and after a workout. Muscle Monk BCAA minimizes muscle damage, while supporting increased lean body mass.
         Product Benefits:
         - Supports Lean Mass Growth
@@ -169,21 +214,48 @@ const createProducts = (cb) => {
     function(done) {
       productCreate(
         'Isolate Protein MEC',
-        39.99,
-        29.99,
+        [
+          {
+            quantity: '1kg',
+            cost: {
+              price: 45.50,
+              members_price: 31.99
+            }
+          },
+          {
+            quantity: '3kg',
+            cost: {
+              price: 78.80,
+              members_price: 60.99
+            }
+          },
+        ],
         `Iso Intense MEC is an instantized whey protein isolate extracted from sweet dairy whey. Proprietary membrane techniques are used to yield a highly pure, nutritionally superior and undenatured isolate protein. It goes through an instantizing process that allows it to disperse easily in Milk and other beverages.
         Infusion of the Multi-enzyme complex (MEC) makes it easier to digest, thus it gets absorbed faster in our body. Its delicious flavor profile, high protein content, and low lactose and fat levels makes it the protein of choice for many beverage applications.`,
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472356/express-members-only/products/iso_abqvly.png',
         flavorsArray,
-        ['1kg', '5kg'],
         done
       );
     },
     function(done) {
       productCreate(
         'Creatine Monohydrate',
-        21.99,
-        13.99,
+        [
+          {
+            quantity: '100g',
+            cost: {
+              price: 19.99,
+              members_price: 11.99
+            }
+          },
+          {
+            quantity: '300g',
+            cost: {
+              price: 29.99,
+              members_price: 23.99
+            }
+          },
+        ],
         `Creatine designed for the Indian Genotype, is a 100% pure Creatine Monohydrate powder. It contains 3g of fast-absorbing micronized creatine per serving and helps to give a continuous supply of energy to your muscles. and provides high energy for high intensity training. It also helps to support muscle strength, protein synthesis and lean muscle mass. Muscle Monk creatine Monohydrate is 100% sugar free, gluten free, and soy free and has no additive preservatives.
         - Increase Size & Strength
         - Increase Power & Performance
@@ -191,7 +263,6 @@ const createProducts = (cb) => {
         - Promotes Muscular Effort`,
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472342/express-members-only/products/creatine_qi8r5t.png',
         flavorsArray,
-        ['100g', '300g', '500g'],
         done
       );
     },
