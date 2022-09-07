@@ -230,9 +230,12 @@ const createProducts = (cb) => {
             }
           },
         ],
-        `Iso Intense MEC is an instantized whey protein isolate extracted from sweet dairy whey. Proprietary membrane techniques are used to yield a highly pure, nutritionally superior and undenatured isolate protein. It goes through an instantizing process that allows it to disperse easily in Milk and other beverages.
-        Infusion of the Multi-enzyme complex (MEC) makes it easier to digest, thus it gets absorbed faster in our body. Its delicious flavor profile, high protein content, and low lactose and fat levels makes it the protein of choice for many beverage applications.`,
-        'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472356/express-members-only/products/iso_abqvly.png',
+        `BCAA offers a unique ratio - 2 Leucine, 1 Isoleucine, 1 Valine - that is specifically tuned to deliver the ideal amounts of these three amino acids during all phases of muscle development and maintenance. Through this formulation, amino acids are released both before and after a workout. Muscle Monk BCAA minimizes muscle damage, while supporting increased lean body mass.
+        Product Benefits:
+        - Supports Lean Mass Growth
+        - Reduces Muscle Breakdown
+        - Increases Protein Synthesis`,
+        'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472339/express-members-only/products/bcaa_chj6nl.png',
         flavorsArray,
         done
       );
