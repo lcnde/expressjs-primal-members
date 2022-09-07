@@ -35,6 +35,9 @@ h3 {
   font-size: 2em;
   font-family: 'Fugaz One', cursive;
 } 
+p {
+  line-height: normal;
+}
 
 // remove blue highlight when clicking elements from phone
 // make all images unselectable
@@ -83,4 +86,18 @@ h3 {
   font-weight: 500;
   line-height: normal;
   cursor: pointer;
+}
+.global-button-white {
+  text-decoration: none;
+  background-color: $transparent;
+  color: $white;
+  font-size: 1em;
+  padding: 5px 30px;
+  text-align: center;
+  border: none;
+  width: 100%;
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
+  border: 1px solid $white;
 }

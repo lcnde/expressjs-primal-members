@@ -1,2 +1,118 @@
 @import 'nav.scss';
-@import 'footer.scss';
+
+.banner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 10px;
+  color: $white;
+  overflow: hidden;
+
+  background-image: url('https://res.cloudinary.com/djg52dvw1/image/upload/v1662544424/express-members-only/6159999_xxwy6o.jpg');
+  
+  .danger{
+    width: 1100px;
+    height: 100%;
+    background-image: url('https://res.cloudinary.com/djg52dvw1/image/upload/v1662545972/express-members-only/danger_rgamea.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    
+    position: absolute;
+    top: 10px;
+    left: -100px;
+    rotate: -25deg;
+  }
+  
+  .overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.75), // dark overlay
+                inset 0 300px 300px 0 rgba(0, 0, 0, 0.75), // shadow from above
+                inset 0 0 70px 0px  rgba(0, 0, 0, 0.75);
+    z-index: 1;
+    left: 0;
+    top: 0;
+  }
+
+  .content {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+
+    .buy {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    justify-content: center;
+    gap: 20px;
+    
+    .offers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      
+      gap: 20px;
+      
+      .global-button-white {
+        max-width: max-content;
+        padding: 15px 30px;
+
+      }
+    }
+  }
+
+  .bundle {
+    display: flex;
+    justify-content: center;
+    .container {
+      max-width: 450px;
+      
+      img {
+        object-fit: contain;
+        width: 100%;
+      }
+    }
+  }
+}
+  
+  @media (min-width: $md) {
+    .danger {
+      width: 1500px;
+      bottom: 0;
+      top: -130px;
+    }
+
+    .content {
+      max-width: 1500px;
+      display: grid;
+      justify-content: center;
+      grid-template-columns: 1.1fr 2fr;
+
+      .buy{
+        align-items: start;
+        
+        h1 {
+        text-align: start;
+        }
+        .offers {
+          align-items: start;
+          p {
+            text-align: start;
+          }
+        }
+
+      }
+      .bundle{
+        .container {
+          max-width: 600px;
+        }
+      }
+    }
+  }
+}
