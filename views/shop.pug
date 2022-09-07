@@ -18,3 +18,16 @@ block content
       .bundle
         .container
           img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1662543240/express-members-only/products/products-bundle_yew932.png", alt="Primal products bundle")
+  .shop
+    .shop-container
+      each product in products
+        a.product-container(href=product.url)
+          .product-photo
+            img(src=product.photo_url, alt="product photo")
+          .product-info
+            p.price $#{product.option[0].cost.price}
+            p.name #{product.name} 
+            .members-price
+              .logo-container
+                img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="membership logo")
+              p Members: $#{product.option[0].cost.members_price}

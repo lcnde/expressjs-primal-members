@@ -22,4 +22,11 @@ const ProductSchema = new Schema(
   }
 );
 
+ProductSchema.virtual('url')
+  .get(function() {
+    let productName = this.name;
+    let hyphenProductName = productName.replace(/\s/g, '-');
+    return '/product/' + hyphenProductName + '/' + this._id;
+  });
+
 module.exports = mongoose.model('Product', ProductSchema);

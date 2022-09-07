@@ -116,3 +116,72 @@
     }
   }
 }
+
+.shop {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+
+  .shop-container {
+    display: grid;
+    grid-template-columns: 180px;
+    gap: 40px 10px;
+
+    .product-container {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.24);
+      padding: 20px;
+      text-decoration: none;
+      color: $black;
+
+      .product-photo {
+        max-width: 100%;
+        img {
+          object-fit: cover;
+          width: 100%;
+        }
+      }
+
+      .product-info {
+        margin: 20px 0 0 0;
+        display: grid;
+        gap: 5px;
+
+        .price {
+          font-size: 1.1em;
+          text-align: center;
+        }
+        .name {
+          font-weight: 500;
+        }
+        .members-price {
+          display: flex;
+          gap: 5px;
+          align-items: center;
+          font-size: 0.8em;
+
+          .logo-container {
+            display: flex;
+            align-items: center;
+            max-width: 20px;
+            img {
+              object-fit: contain;
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    @media (min-width: 370px) {
+      grid-template-columns: 180px 180px;
+    }
+    @media (min-width: 590px) {
+      grid-template-columns: 180px 180px 180px;
+      gap: 40px 20px;
+    }
+    @media (min-width: $lg) {
+      grid-template-columns: 200px 200px 200px 200px;
+      gap: 40px 30px;
+    }
+  }
+}

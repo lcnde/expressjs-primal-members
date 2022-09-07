@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 
 const User = require('../models/user');
+const Product = require('../models/product');
 
 exports.home = function (req, res) {
   res.render('home', 
@@ -9,15 +10,22 @@ exports.home = function (req, res) {
     });
 };
 
+// SHOP
+exports.shop = function (req, res, next) {
 
-exports.shop = function (req, res) {
-  res.render('shop', 
-  { 
-    title: 'shop'
-  });
+  Product.find({})
+    .exec((err, products) => {
+      if (err) {
+        return next(err);
+      };
+
+      // success
+      res.render('shop', {
+        title: 'shop',
+        products: products,
+      });
+    })
 };
-
-
 
 exports.cart = function (req, res) {
   res.render('cart', 
@@ -25,6 +33,11 @@ exports.cart = function (req, res) {
     title: 'Cart'
   });
 };
+
+exports.product_detail = function (req, res, next) {
+  
+}
+
 
 // MEMBERSHIP
 exports.membership = function (req, res) {

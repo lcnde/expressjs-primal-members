@@ -12,10 +12,12 @@ const messageController = require('../controllers/message-controller');
 
 router.get('/', indexController.home);
 
+// SHOP
 router.get('/shop', indexController.shop);
 
-
 router.get('/cart', indexController.cart);
+
+router.get('/product/:id', indexController.product_detail);
 
 
 // TALKBOARD
