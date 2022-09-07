@@ -1,3 +1,5 @@
+const { body, validationResult } = require('express-validator');
+
 const User = require('../models/user');
 
 exports.home = function (req, res) {
@@ -32,27 +34,49 @@ exports.membership = function (req, res) {
   });
 };
 
-exports.membership_join = function (req, res, next) {
-  if (req.body.passcode === 'Primal') {
-    // good passcode, give user membership
-    User.findByIdAndUpdate(req.session.passport.user, {
-      is_member: true,
-    }, (err, user) => {
-      if (err) {
-        return next(err);
-      };
+exports.membership_join = [
+    // validate and sanitize
+    body('passcode')
+    .not().isEmpty().withMessage("Passcode can't be empty")
+    .trim()
+    .escape(),
 
-      res.redirect('/membership')
-    });
-    return;
-  }
-  
-  // wrongs passcode, render with errors
-  res.render('membership', {
-    title: 'membership',
-    err: 'Wrong passcode'
-  });
-};
+    // process request after validation
+    (req, res, next) => {
+      // check for errors
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        res.render('membership', {
+          title: 'membership',
+          err: errors.array(),
+        });
+        return;
+      }
+
+      // no errors found
+      if (req.body.passcode === 'Primal') {
+        // good passcode, give user membership
+        User.findByIdAndUpdate(
+          req.session.passport.user, 
+          {is_member: true}, 
+          (err, user) => {
+          if (err) {
+            return next(err);
+          };
+    
+          res.redirect('/membership')
+        });
+        return;
+      }
+      
+      // wrongs passcode, render with errors
+      res.render('membership', {
+        title: 'membership',
+        err: [{msg: 'Wrong passcode'}]
+      });
+    }
+];
 
 exports.membership_delete = function (req, res, next) {
   // check if user exists
