@@ -60,11 +60,18 @@ block content
               .flavors
                 each flavor in product.flavor
                   .flavor-container.no-select
-                    .photo
+                    .flavor-photo
                       img(src=flavor.photo_url, alt="flavor photo")
                     .name #{flavor.name}
             .buy
               button.buy-button.global-button(type='submit') Buy Now
+          if !locals.currentUser && !locals.checkMember
+            .get-membership
+              span Get our membership and pay only #[span.m-price $11.99]
+              a.get-m-button(href='/membership')
+                .m-logo
+                  img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="logo")
+                span Get Membership
       .description
         span.desc Description
         p #{product.description}
