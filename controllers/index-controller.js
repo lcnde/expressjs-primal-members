@@ -2,6 +2,7 @@ const { body, validationResult } = require('express-validator');
 
 const User = require('../models/user');
 const Product = require('../models/product');
+const Flavor = require('../models/flavor');
 
 exports.home = function (req, res) {
   res.render('home', 
@@ -35,8 +36,25 @@ exports.cart = function (req, res) {
 };
 
 exports.product_detail = function (req, res, next) {
-  
-}
+  Product.findById(req.params.id)
+    .populate({path: 'flavor'})
+    .exec(function(err, product) {
+      if (err) {
+        return next(err);
+      };
+      if (product == null) {
+        // no results
+        let err = new Error('Product not found');
+        err.status = 404;
+        return next(err);
+      }
+      // success
+      res.render('product_detail', {
+        title: product.name,
+        product: product
+      });
+    });
+};
 
 
 // MEMBERSHIP

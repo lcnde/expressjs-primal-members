@@ -17,7 +17,7 @@ router.get('/shop', indexController.shop);
 
 router.get('/cart', indexController.cart);
 
-router.get('/product/:id', indexController.product_detail);
+router.get('/product/:name/:id', indexController.product_detail);
 
 
 // TALKBOARD

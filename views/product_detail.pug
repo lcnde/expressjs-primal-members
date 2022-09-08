@@ -1,0 +1,73 @@
+extends layout
+
+block stylesheet
+  link(rel='stylesheet', href='/stylesheets/product_detail.css')
+
+block content
+  .product-page
+    .container
+      .path
+        p
+          a(href="/") Home 
+          span  &gt;
+          a(href="/shop") Shop
+          span  &gt;
+          span #{product.name}
+      .product
+        .photo
+          img(src=product.photo_url, alt="product photo")
+        .card-container
+          form.card(action='#')
+            .name
+              h1 #{product.name}
+            .price
+              if locals.currentUser && locals.checkMember
+                .member
+                  .normal-price-container.price-container
+                    .price
+                      .line
+                      span $ 13.99
+                    .stock
+                      span In Stock
+                  .member-discount-container
+                    .logo-container
+                      img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="logo")
+                    span.member-discount Members Discount Applied:
+                  .member-price-container.price-container
+                    span.price $ 9.99
+                    span.stock In Stock
+              else
+                .member
+                  .normal-price-container.price-container
+                    .price
+                      span $ 13.99
+                    .stock
+                      span In Stock
+            .options
+              .select
+                label(for='option') Option
+                select(name='option' id='option')
+                  option(value='option1' ) 1kg
+                  option(value='option2') 3kg
+              .select
+                label(for='quantity') Quantity
+                select(name='quantity' id='quantity')
+                  - var n = 0;
+                  while n < 5
+                    option(value=n++) #{n}
+            .flavor-section
+              span.title Flavor
+              .flavors
+                each flavor in product.flavor
+                  .flavor-container.no-select
+                    .photo
+                      img(src=flavor.photo_url, alt="flavor photo")
+                    .name #{flavor.name}
+            .buy
+              button.buy-button.global-button(type='submit') Buy Now
+      .description
+        span.desc Description
+        p #{product.description}
+      .more
+        h2 Check out more products
+        .more-products
