@@ -3,8 +3,10 @@ const router = express.Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
+const async = require('async');
 
 const User = require('../models/user');
+const Cart = require('../models/cart');
 
 
 
@@ -44,17 +46,49 @@ router.post('/signup', function(req, res, next) {
       return next(err);
     };
     // success
-    const createdUser = new User({
-      username: req.body.username,
-      password: hashedPassword,
-      is_admin: req.body.is_admin,
-      is_member: false
-    }).save(err => {
+
+    
+    async.waterfall([
+      function(callback) {
+        const user = new User({
+          username: req.body.username,
+          password: hashedPassword,
+          is_admin: req.body.is_admin,
+          is_member: false
+        });
+
+        user.save((err, user) => {
+          if (err) {
+            return next(err);
+          };
+
+          callback(null, user);
+        });
+      },
+      function(user, callback) {
+        const cart = new Cart({
+          owner: user.id,
+          contents: [],
+        });
+
+        cart.save((err, cart) => {
+          if (err) {
+            return next(err);
+          };
+
+          callback(null, 'done');
+        });
+      },
+    ], function(err, result) {
       if (err) {
         return next(err);
       };
+
+      // success
       res.redirect('/');
     });
+
+
   });
 });
 // router.post('/signup', function(req, res, next) {

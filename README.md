@@ -162,6 +162,9 @@ This form sole purpose is to reload the product page with the correct price info
 
 [This stackoverflow answer](https://stackoverflow.com/questions/1431726/css-selector-for-a-checked-radio-buttons-label) explains how to update the CSS of an element if a radio button is selected or not.
 
+# Cart
+The cart is created when a user signs up. Then all the items will be added to the cart tied to the user account.
+
 # PopulateDb
 It is a simple script to populate the database with products. When you run it make sure to `cd` inside its folder `/config/run` otherwise it won't work (it will give an auth error because it can't find the .env file). If you are not in its directory the relative path to `.env` will not be the same so the script will not be able to see the database password when executed.
 
