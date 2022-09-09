@@ -67,10 +67,32 @@ exports.product_detail = function (req, res, next) {
         return;
       };
 
+      const passPrice = (()=>{
+        // pass into the template the price of the product based on what parameters is passed into the url for the :option
+        let pricing = {price:0, members_price: 0};
+        for (let option in product.option) {
+          if (product.option[option].quantity === req.params.option) {
+            pricing.price = product.option[option].cost.price;
+            pricing.members_price = product.option[option].cost.members_price;
+          };
+        };
+        if (pricing.price === 0 || pricing.members_price === 0) {
+          // if the price doesnt change from 0 then there was an error in calculating it
+          let err = new Error('Error in calculating price');
+          err.status = 500 // internal server error
+          return next(err);
+        };
+        // console.log(pricing);
+        // success
+        return pricing;
+      })();
+
       // success
       res.render('product_detail', {
         title: product.name,
-        product: product
+        product: product,
+        selected_product: req.params.option,
+        pricing: passPrice,
       });
     });
 };

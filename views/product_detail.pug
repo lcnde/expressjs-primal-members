@@ -3,21 +3,23 @@ extends layout
 block stylesheet
   link(rel='stylesheet', href='/stylesheets/product_detail.css')
 
+
 block content
   .product-page
     .container
       .path
         p
           a(href="/") Home 
-          span  &gt;
+          span  &gt; 
           a(href="/shop") Shop
-          span  &gt;
+          span  &gt; 
           span #{product.name}
       .product
         .photo
           img(src=product.photo_url, alt="product photo")
         .card-container
-          form.card(action='#')
+          form.display-none(id='redirect-option')
+          .card(action='#')
             .name
               h1 #{product.name}
             .price
@@ -26,7 +28,7 @@ block content
                   .normal-price-container.price-container
                     .price
                       .line
-                      span $ 13.99
+                      span $ #{pricing.price}
                     .stock
                       span In Stock
                   .member-discount-container
@@ -34,21 +36,28 @@ block content
                       img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="logo")
                     span.member-discount Members Discount Applied:
                   .member-price-container.price-container
-                    span.price $ 9.99
+                    span.price $ #{product.option[0].cost.members_price}
                     span.stock In Stock
               else
                 .member
                   .normal-price-container.price-container
                     .price
-                      span $ 13.99
+                      span $ #{pricing.price}
                     .stock
                       span In Stock
             .options
               .select
                 label(for='option') Option
-                select(name='option' id='option')
-                  option(value='option1' ) 1kg
-                  option(value='option2') 3kg
+                select( name='option' 
+                        id='option' 
+                        form='redirect-option'
+                        onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);')
+                  each opt in product.option
+                    //- selected is a parameter passed from the controller
+                    if opt.quantity===selected_product
+                      option(value=(product.url + '/' + opt.quantity) selected) #{opt.quantity}
+                    else
+                      option(value=(product.url + '/' + opt.quantity)) #{opt.quantity}
               .select
                 label(for='quantity') Quantity
                 select(name='quantity' id='quantity')
@@ -75,6 +84,4 @@ block content
       .description
         span.desc Description
         p #{product.description}
-      .more
-        h2 Check out more products
-        .more-products
+

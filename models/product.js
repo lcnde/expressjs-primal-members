@@ -23,11 +23,19 @@ const ProductSchema = new Schema(
 );
 
 // the url passes a default option when opening the product page from the shop. In this case the default option is just the first one, for no particular reason.
-ProductSchema.virtual('url')
+ProductSchema.virtual('default_url')
   .get(function() {
     let productName = this.name;
     let hyphenProductName = productName.replace(/\s/g, '-');
     return '/product/' + hyphenProductName + '/' + this._id + '/' + this.option[0].quantity;
   });
+
+// this url will be used to select product options. To the url provided by the virtual, from the pugjs template, the code will append the product option
+ProductSchema.virtual('url')
+.get(function() {
+  let productName = this.name;
+  let hyphenProductName = productName.replace(/\s/g, '-');
+  return '/product/' + hyphenProductName + '/' + this._id;
+});
 
 module.exports = mongoose.model('Product', ProductSchema);

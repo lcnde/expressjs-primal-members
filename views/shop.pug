@@ -21,7 +21,7 @@ block content
   .shop
     .shop-container
       each product in products
-        a.product-container(href=product.url)
+        a.product-container(href=product.default_url)
           .product-photo
             img(src=product.photo_url, alt="product photo")
           .product-info

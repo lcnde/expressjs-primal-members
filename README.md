@@ -138,6 +138,20 @@ if locals.checkAdmin
 
 This system was made because if the user was not logged in and you checked for `locals.currentUser.is_member` the server was giving an error because you cant check the value (in this case `is_member`) of an undefined object (in this case `currentUser` since the user was not logged in).
 
+# How the product options work
+1. The option is passed in as a url parameter `:option` when you open the product page from the shop. This is done by creating a database Schema virtual for the url of the product that passes in the first value from the array of product options.
+2. The product page will display the information of the product based on its url. 
+3. The product page contains 2 forms. The first form is is tied to the `select` tag for the product option.\
+This form sole purpose is to reload the product page with the correct price info every time the user selects another product option. This form will not partecipate in sending data to the cart.\
+The second form is the form actually used to send data to the cart. It will contain the inputs for the product details. The input for the product option will be hidden and it will be tied to the parameter present in the product url (this is because the `select` tag for the product url that is visible is there just to change the page of the product, not to actually send data.).
+
+# PopulateDb
+It is a simple script to populate the database with products. When you run it make sure to `cd` inside its folder `/config/run` otherwise it won't work (it will give an auth error because it can't find the .env file). If you are not in its directory the relative path to `.env` will not be the same so the script will not be able to see the database password when executed.
+
+## Handling errors
+There is a function called `handleErr` that takes 2 parameters, `err` and `res`. We are not doing anything with `res`, but we need `err` so we can print the errors to the server console if there are any.
+
+This function is passed in on the final call of `async.series`. From there it is passed inside the `createFlavors` (and others) as callback, and that callback is passed inside the individual `flavorCreate` function, where it is actually used to pass errors if there are any problems in saving the record to the database.
 # Notes
 The controller must pass the name of the `stylesheet` that the `view` will use.
 
