@@ -213,7 +213,7 @@ const createProducts = (cb) => {
     },
     function(done) {
       productCreate(
-        'Isolate Protein MEC',
+        'BCAA 2:1:1',
         [
           {
             quantity: '1kg',
