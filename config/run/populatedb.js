@@ -20,6 +20,14 @@ const Flavor = require('../../models/flavor');
 const productsArray = [];
 const flavorsArray = [];
 
+
+function handleErr(err, res) {
+  if (err) {
+    return console.log('ERROR:', err);
+  };
+  // console.log(res);
+};
+
 // function to create the individual product
 const productCreate = (
   name, 
@@ -42,88 +50,105 @@ const productCreate = (
     const product = new Product(productDetails);
 
     product.save(function(err) {
-      if (err) {
-        return callback(err, null);
-      };
-
+        if (err) {
+            return callback(err, null);
+          };
+    
       productsArray.push(product);
       callback(null, product);
     });
 };
 
 const flavorCreate = (name, photo_url, callback) => {
-
+  
   const flavorDetails = {
     name: name,
     photo_url: photo_url
   };
 
   const flavor = new Flavor(flavorDetails);
-
+  
   flavor.save(function(err) {
     if (err) {
-      return callback(null, flavor);
+      return callback(err, null);
     };
-
+    
     flavorsArray.push(flavor);
     callback(null, flavor);
   });
 };
 
+// const testCreate = (name, callback) => {
+//   let err
+//   // uncomment if you want to throw an error
+//   // err = new Error('test');
+//   if (err) {
+//     return callback(err, null);
+//   };
+//   console.log('test successful')
+// }
+
+// const createTests = (cb) => {
+//   async.parallel([
+//     function(){
+//       testCreate('yes', cb)
+//     }
+//   ], cb)
+// }
+
 // function that will create multiple flavors
 // this function needs to be before the function to create products because you need to add flavors to products so they need to be created before them.
 const createFlavors = (cb) => {
   async.parallel([
-    function(done) {
-      flavorCreate(
+    function(cb) {
+        flavorCreate(
         'Neutral',
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662468572/express-members-only/flavors/neutral_j9l6uh.jpg',
-        done
+        cb
       );
     },
-    function(done) {
+    function(cb) {
       flavorCreate(
         'Soda',
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662468572/express-members-only/flavors/soda_q8umuj.jpg',
-        done
+        cb
       );
     },
-    function(done) {
+    function(cb) {
       flavorCreate(
         'Orange',
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662468572/express-members-only/flavors/orange_a1knvu.jpg',
-        done
+        cb
       );
     },
-    function(done) {
+    function(cb) {
       flavorCreate(
         'Lime',
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662468572/express-members-only/flavors/lime_tscdby.jpg',
-        done
+        cb
       );
     },
-    function(done) {
+    function(cb) {
       flavorCreate(
         'Watermelon',
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662468572/express-members-only/flavors/watermelon_bjgeh2.jpg',
-        done
+        cb
       );
     },
-    function(done) {
+    function(cb) {
       flavorCreate(
         'Peach',
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662468572/express-members-only/flavors/peach_lrpmqp.jpg',
-        done
+        cb
       );
     },
-
-  ], cb);
+  ], cb)
 };
 
-// function that will create multiple products
+// // function that will create multiple products
 const createProducts = (cb) => {
   async.parallel([
-    function(done) {
+    function(cb) {
       productCreate(
         'Isolate Protein MEC',
         [
@@ -146,10 +171,10 @@ const createProducts = (cb) => {
         Infusion of the Multi-enzyme complex (MEC) makes it easier to digest, thus it gets absorbed faster in our body. Its delicious flavor profile, high protein content, and low lactose and fat levels makes it the protein of choice for many beverage applications.`,
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472356/express-members-only/products/iso_abqvly.png',
         flavorsArray,
-        done
+        cb
       );
     },
-    function(done) {
+    function(cb) {
       productCreate(
         'L-Glutamine',
         [
@@ -171,12 +196,12 @@ const createProducts = (cb) => {
         `L-glutamine is the most abundant amino acid in the blood and in muscle cells. It is classified as a conditionally essential amino acid, which means that the body is normally capable of manufacturing enough to meet its metabolic needs. Glutamine has several functions including the support of immunity, gastrointestinal integrity, insulin secretion, neurological activity, and muscle protein synthesis. Glutamine actually supplies 35% of nitrogen to muscles to synthesise proteins. This, in turn, will promote protein synthesis. Why is this important? Well, the benefits of maintaining a high nitrogen balance in the muscle prevents muscle breakdown, therefore retaining more muscle. This equates to a leaner you! A leaner you means you have less body fat, so, in essence, glutamine may help with the reduction of overall body fat.`,
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472352/express-members-only/products/glutamine_szx2nk.png',
         flavorsArray,
-        done
+        cb
       );
     },
-    function(done) {
+    function(cb) {
       productCreate(
-        'Intense Gainer',
+        'BCAA 2:1:1',
         [
           {
             quantity: '100g',
@@ -207,13 +232,12 @@ const createProducts = (cb) => {
         - Increases Protein Synthesis`,
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472347/express-members-only/products/gainer_ol2nbo.png',
         flavorsArray,
-        ['100g', '150g','200g'],
-        done
+        cb
       );
     },
-    function(done) {
+    function(cb) {
       productCreate(
-        'BCAA 2:1:1',
+        'Isolate Protein MEC',
         [
           {
             quantity: '1kg',
@@ -237,10 +261,10 @@ const createProducts = (cb) => {
         - Increases Protein Synthesis`,
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472339/express-members-only/products/bcaa_chj6nl.png',
         flavorsArray,
-        done
+        cb
       );
     },
-    function(done) {
+    function(cb) {
       productCreate(
         'Creatine Monohydrate',
         [
@@ -266,17 +290,24 @@ const createProducts = (cb) => {
         - Promotes Muscular Effort`,
         'https://res.cloudinary.com/djg52dvw1/image/upload/v1662472342/express-members-only/products/creatine_qi8r5t.png',
         flavorsArray,
-        done
+        cb
       );
     },
-
   ], cb);
 };
 
+
 // execute, in order, the functions that will create and save to database flavors and products
 async.series([
-  createFlavors,
-  createProducts
+  // function(handleErr){
+  //   createTests(handleErr);
+  // },
+  function(handleErr){
+    createFlavors(handleErr);
+  },
+  function(handleErr){
+    createProducts(handleErr);
+  },
 ], function(err, results) {
   if (err) {
     return console.log('Final Err:', err);
