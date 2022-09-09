@@ -151,14 +151,16 @@ This system was made because if the user was not logged in and you checked for `
 
 ## Submitting product info 
 1. The product page contains 2 forms. 
-2. The first form is is tied to the `select` tag for the product option.\
+2. The first form (`id=redirect-option`) is is tied to the `select` tag for the product option.\
 This form sole purpose is to reload the product page with the correct price info every time the user selects another product option. This form will not partecipate in sending data to the cart.\
-3. The second form is the form actually used to send data to the cart. It will contain the inputs for the product details. The real input for the product option will be hidden and it will be tied to the parameter present in the product url (meaning that its value will be equal to the parameter `:option` from the url. this is because the `select` tag for the product url that is visible is there just to change the page of the product, not to actually send data.).
+3. The second form (`id=submit-product`) is the form actually used to send data to the cart. It will contain the inputs for the product details. The real input for the product option will be hidden and it will be tied to the parameter present in the product url (meaning that its value will be equal to the parameter `:option` from the url. this is because the `select` tag for the product url that is visible is there just to change the page of the product, not to actually send data.).
 
 ## Useful resources
 [In this stackoverflow answer](https://stackoverflow.com/questions/7562095/redirect-on-select-option-in-select-box) it shows how to make a `select` tag redirect to another page every time you change `option`.
 
 [This stackoverflow answer](https://stackoverflow.com/questions/3430214/form-inside-a-form-is-that-alright) shows that you can put your input fields outside a form as long as they point to its id.
+
+[This stackoverflow answer](https://stackoverflow.com/questions/1431726/css-selector-for-a-checked-radio-buttons-label) explains how to update the CSS of an element if a radio button is selected or not.
 
 # PopulateDb
 It is a simple script to populate the database with products. When you run it make sure to `cd` inside its folder `/config/run` otherwise it won't work (it will give an auth error because it can't find the .env file). If you are not in its directory the relative path to `.env` will not be the same so the script will not be able to see the database password when executed.

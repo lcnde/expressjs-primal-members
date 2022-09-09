@@ -71,7 +71,7 @@ block content
                     - n++
                     option(value=n) #{n}
             .flavor-section
-              span.title Flavor
+              span.title Select Flavor
               .flavors
                 each flavor in product.flavor
                   input.display-none(type='radio' id=`flavor_${flavor.name}` name='product_flavor' value=`${flavor.name}` form='submit-product' required)
