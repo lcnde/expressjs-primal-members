@@ -13,11 +13,19 @@ const messageController = require('../controllers/message-controller');
 router.get('/', indexController.home);
 
 // SHOP
+// list products
 router.get('/shop', indexController.shop);
 
+// see product page
+router.get('/product/:name/:id/:option', indexController.product_detail);
+
+// see cart page
 router.get('/cart', indexController.cart);
 
-router.get('/product/:name/:id/:option', indexController.product_detail);
+// add product to cart
+router.post('/add-to-cart', indexController.cart_post);
+
+
 
 
 // TALKBOARD

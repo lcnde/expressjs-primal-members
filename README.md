@@ -138,12 +138,27 @@ if locals.checkAdmin
 
 This system was made because if the user was not logged in and you checked for `locals.currentUser.is_member` the server was giving an error because you cant check the value (in this case `is_member`) of an undefined object (in this case `currentUser` since the user was not logged in).
 
-# How the product options work
-1. The option is passed in as a url parameter `:option` when you open the product page from the shop. This is done by creating a database Schema virtual for the url of the product that passes in the first value from the array of product options.
-2. The product page will display the information of the product based on its url. 
-3. The product page contains 2 forms. The first form is is tied to the `select` tag for the product option.\
+# How displaying product data works
+
+## Fetching product info and updating them based on selected option
+1. Http request from /shop (the links for all the products corresponds to `default_url` virtual from /models/product.js)
+2. Request is handled by routes/index.js with `router.get('/product/:name/:id/:option', indexController.product_detail);`
+3. The router uses the method from /controllers/index-controller.js. 
+4. The `product_detail` function finds the product given in the `:id` url parameter.
+5. `product_detail` takes the `:option` parameter from the url and uses it to find, inside the product options array, the option that corresponds to `:option`. 
+6. When it finds it, it takes the `price` and `members_price` of that option and puts it inside the `pricing` variable.
+7. The `pricing` variable and `:option` value are passed inside the controller when rendering the product_detail page. Along with them there are also other parameters passed, like the full product and the title of the page.
+
+## Submitting product info 
+1. The product page contains 2 forms. 
+2. The first form is is tied to the `select` tag for the product option.\
 This form sole purpose is to reload the product page with the correct price info every time the user selects another product option. This form will not partecipate in sending data to the cart.\
-The second form is the form actually used to send data to the cart. It will contain the inputs for the product details. The input for the product option will be hidden and it will be tied to the parameter present in the product url (this is because the `select` tag for the product url that is visible is there just to change the page of the product, not to actually send data.).
+3. The second form is the form actually used to send data to the cart. It will contain the inputs for the product details. The real input for the product option will be hidden and it will be tied to the parameter present in the product url (meaning that its value will be equal to the parameter `:option` from the url. this is because the `select` tag for the product url that is visible is there just to change the page of the product, not to actually send data.).
+
+## Useful resources
+[In this stackoverflow answer](https://stackoverflow.com/questions/7562095/redirect-on-select-option-in-select-box) it shows how to make a `select` tag redirect to another page every time you change `option`.
+
+[This stackoverflow answer](https://stackoverflow.com/questions/3430214/form-inside-a-form-is-that-alright) shows that you can put your input fields outside a form as long as they point to its id.
 
 # PopulateDb
 It is a simple script to populate the database with products. When you run it make sure to `cd` inside its folder `/config/run` otherwise it won't work (it will give an auth error because it can't find the .env file). If you are not in its directory the relative path to `.env` will not be the same so the script will not be able to see the database password when executed.

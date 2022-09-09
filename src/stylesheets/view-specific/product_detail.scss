@@ -153,6 +153,32 @@
               overflow-y: hidden;
               overflow-x: scroll;
 
+              // css responsible for coloring selected radio buttons
+              label {
+                .flavor-photo {
+                  img {
+                    filter: grayscale(100%);
+                    opacity: 0.5;
+                  }
+                }
+                .name {
+                  color: $font-gray;
+                }
+              }
+              input:checked + label {
+                .flavor-photo {
+                  img {
+                    filter: none;
+                    opacity: 1;
+                  }
+                }
+                .name {
+                  color: $black;
+                  font-weight: 500;
+                }
+              }
+              // css responsible for coloring selected radio buttons
+
               .flavor-container {
                 display: flex;
                 flex-direction: column;

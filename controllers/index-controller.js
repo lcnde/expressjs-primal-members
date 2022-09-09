@@ -35,6 +35,10 @@ exports.cart = function (req, res) {
   });
 };
 
+exports.cart_post = function(req, res, next) {
+  console.log(req.body);
+}
+
 exports.product_detail = function (req, res, next) {
   Product.findById(req.params.id)
     .populate({path: 'flavor'})

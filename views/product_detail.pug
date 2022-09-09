@@ -18,7 +18,11 @@ block content
         .photo
           img(src=product.photo_url, alt="product photo")
         .card-container
+          //- this form is just for redirecting
           form.display-none(id='redirect-option')
+          //- this form is to send data
+          form.display-none(action='/add-to-cart' method='post' id='submit-product')
+            input(type='text' id='option' name='product_option' value=selected_product)
           .card(action='#')
             .name
               h1 #{product.name}
@@ -36,7 +40,7 @@ block content
                       img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="logo")
                     span.member-discount Members Discount Applied:
                   .member-price-container.price-container
-                    span.price $ #{product.option[0].cost.members_price}
+                    span.price $ #{pricing.members_price}
                     span.stock In Stock
               else
                 .member
@@ -48,6 +52,7 @@ block content
             .options
               .select
                 label(for='option') Option
+                //-  the "onchange" parameter is what enables the page to be redirected every time a new product option is selected from the dropdown menu
                 select( name='option' 
                         id='option' 
                         form='redirect-option'
@@ -59,24 +64,26 @@ block content
                     else
                       option(value=(product.url + '/' + opt.quantity)) #{opt.quantity}
               .select
-                label(for='quantity') Quantity
-                select(name='quantity' id='quantity')
+                label(for='product_quantity') Quantity
+                select(name='product_quantity' id='product_quantity' form='submit-product')
                   - var n = 0;
                   while n < 5
-                    option(value=n++) #{n}
+                    - n++
+                    option(value=n) #{n}
             .flavor-section
               span.title Flavor
               .flavors
                 each flavor in product.flavor
-                  .flavor-container.no-select
+                  input.display-none(type='radio' id=`flavor_${flavor.name}` name='product_flavor' value=`${flavor.name}` form='submit-product' required)
+                  label(for=`flavor_${flavor.name}`).flavor-container
                     .flavor-photo
                       img(src=flavor.photo_url, alt="flavor photo")
                     .name #{flavor.name}
             .buy
-              button.buy-button.global-button(type='submit') Buy Now
+              button.buy-button.global-button(type='submit' form='submit-product') Buy Now
           if !locals.currentUser && !locals.checkMember
             .get-membership
-              span Get our membership and pay only #[span.m-price $11.99]
+              span Get our membership and pay only #[span.m-price $#{pricing.members_price}]
               a.get-m-button(href='/membership')
                 .m-logo
                   img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="logo")
