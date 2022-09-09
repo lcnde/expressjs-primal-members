@@ -57,12 +57,12 @@ block content
                         id='option' 
                         form='redirect-option'
                         onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);')
-                  each opt in product.option
+                  each option in product.options
                     //- selected is a parameter passed from the controller
-                    if opt.quantity===selected_product
-                      option(value=(product.url + '/' + opt.quantity) selected) #{opt.quantity}
+                    if option.weight===selected_product
+                      option(value=(product.url + '/' + option.weight) selected) #{option.weight}
                     else
-                      option(value=(product.url + '/' + opt.quantity)) #{opt.quantity}
+                      option(value=(product.url + '/' + option.weight)) #{option.weight}
               .select
                 label(for='product_quantity') Quantity
                 select(name='product_quantity' id='product_quantity' form='submit-product')

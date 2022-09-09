@@ -31,7 +31,7 @@ function handleErr(err, res) {
 // function to create the individual product
 const productCreate = (
   name, 
-  option,
+  options,
   description, 
   photo_url, 
   flavor, 
@@ -39,7 +39,7 @@ const productCreate = (
 
     const productDetails = {
       name: name,
-      option: option,
+      options: options,
       // price: price,
       // members_price: members_price,
       description: description,
@@ -153,14 +153,14 @@ const createProducts = (cb) => {
         'Isolate Protein MEC',
         [
           {
-            quantity: '1kg',
+            weight: '1kg',
             cost: {
               price: 19.99,
               members_price: 13.99
             }
           },
           {
-            quantity: '5kg',
+            weight: '5kg',
             cost: {
               price: 79.99,
               members_price: 60.99
@@ -179,14 +179,14 @@ const createProducts = (cb) => {
         'L-Glutamine',
         [
           {
-            quantity: '100g',
+            weight: '100g',
             cost: {
               price: 19.99,
               members_price: 13.99
             }
           },
           {
-            quantity: '300g',
+            weight: '300g',
             cost: {
               price: 29.99,
               members_price: 23.99
@@ -204,21 +204,21 @@ const createProducts = (cb) => {
         'BCAA 2:1:1',
         [
           {
-            quantity: '100g',
+            weight: '100g',
             cost: {
               price: 19.99,
               members_price: 13.99
             }
           },
           {
-            quantity: '300g',
+            weight: '300g',
             cost: {
               price: 32.00,
               members_price: 25.99
             }
           },
           {
-            quantity: '500g',
+            weight: '500g',
             cost: {
               price: 56.00,
               members_price: 40.27
@@ -240,14 +240,14 @@ const createProducts = (cb) => {
         'Isolate Protein MEC',
         [
           {
-            quantity: '1kg',
+            weight: '1kg',
             cost: {
               price: 45.50,
               members_price: 31.99
             }
           },
           {
-            quantity: '3kg',
+            weight: '3kg',
             cost: {
               price: 78.80,
               members_price: 60.99
@@ -269,14 +269,14 @@ const createProducts = (cb) => {
         'Creatine Monohydrate',
         [
           {
-            quantity: '100g',
+            weight: '100g',
             cost: {
               price: 19.99,
               members_price: 11.99
             }
           },
           {
-            quantity: '300g',
+            weight: '300g',
             cost: {
               price: 29.99,
               members_price: 23.99

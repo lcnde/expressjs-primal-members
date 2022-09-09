@@ -55,8 +55,8 @@ exports.product_detail = function (req, res, next) {
       const checkOption = ((product) => {
         // this functions checks if the option passed into the parameter url exists, and if it does not, it returns an error.
         let options = [];
-        for (let i = 0; i < product.option.length; i++) {
-          options.push(product.option[i].quantity);
+        for (let i = 0; i < product.options.length; i++) {
+          options.push(product.options[i].weight);
         };
         if (options.includes(req.params.option)) {
           return;
@@ -74,10 +74,10 @@ exports.product_detail = function (req, res, next) {
       const passPrice = (()=>{
         // pass into the template the price of the product based on what parameters is passed into the url for the :option
         let pricing = {price:0, members_price: 0};
-        for (let option in product.option) {
-          if (product.option[option].quantity === req.params.option) {
-            pricing.price = product.option[option].cost.price;
-            pricing.members_price = product.option[option].cost.members_price;
+        for (let option in product.options) {
+          if (product.options[option].weight === req.params.option) {
+            pricing.price = product.options[option].cost.price;
+            pricing.members_price = product.options[option].cost.members_price;
           };
         };
         if (pricing.price === 0 || pricing.members_price === 0) {
