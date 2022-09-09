@@ -11,7 +11,7 @@ exports.home = function (req, res) {
     });
 };
 
-// SHOP
+// SHOP -----------------------------------------
 exports.shop = function (req, res, next) {
 
   Product.find({})
@@ -47,7 +47,26 @@ exports.product_detail = function (req, res, next) {
         let err = new Error('Product not found');
         err.status = 404;
         return next(err);
-      }
+      };
+      const checkOption = ((product) => {
+        // this functions checks if the option passed into the parameter url exists, and if it does not, it returns an error.
+        let options = [];
+        for (let i = 0; i < product.option.length; i++) {
+          options.push(product.option[i].quantity);
+        };
+        if (options.includes(req.params.option)) {
+          return;
+        };
+        // product options doesn't include option passed into url parameter, return error
+        let err = new Error('Option not found');
+        err.status = 404;
+        return ['error', next(err)];
+      })(product);
+      if (checkOption) {
+        // this stops the execution of the product_detail function so the res.render doesnt execute, this way you don't get the "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client" error.
+        return;
+      };
+
       // success
       res.render('product_detail', {
         title: product.name,
@@ -55,9 +74,9 @@ exports.product_detail = function (req, res, next) {
       });
     });
 };
+// SHOP -----------------------------------------
 
-
-// MEMBERSHIP
+// MEMBERSHIP ----------------------------------
 exports.membership = function (req, res) {
   res.render('membership', 
   { 
@@ -121,3 +140,4 @@ exports.membership_delete = function (req, res, next) {
     res.redirect('/membership');
   });
 }
+// MEMBERSHIP ----------------------------------

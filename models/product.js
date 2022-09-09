@@ -22,11 +22,12 @@ const ProductSchema = new Schema(
   }
 );
 
+// the url passes a default option when opening the product page from the shop. In this case the default option is just the first one, for no particular reason.
 ProductSchema.virtual('url')
   .get(function() {
     let productName = this.name;
     let hyphenProductName = productName.replace(/\s/g, '-');
-    return '/product/' + hyphenProductName + '/' + this._id;
+    return '/product/' + hyphenProductName + '/' + this._id + '/' + this.option[0].quantity;
   });
 
 module.exports = mongoose.model('Product', ProductSchema);
