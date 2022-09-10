@@ -5,4 +5,51 @@ block stylesheet
 
 
 block content
-  
+  .content
+    .cart-page
+      .products-container
+        .product-card
+          .product-photo-container
+            img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1662472339/express-members-only/products/bcaa_chj6nl.png", alt="product photo")
+          .product-info-container
+            .remove-from-cart-container
+              i.bi.bi-x-lg
+            .product-details
+              span.product-name Creatine Monohydrate
+              span.product-flavor Flavor: Chocolate
+            .bottom-container
+              .quantity-container
+                span.remove-quantity.quantity-controller -
+                span.quantity 1
+                span.add-quantity.quantity-controller +
+              .price-container
+                .discount-container
+                  .member-logo-container
+                    img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
+                  span.discount-applied Members Discount Applied:
+                span.product-price $ 50.99
+      .checkout-container
+        .co-section
+          span.co-summary Summary
+        .co-section
+          .co-subsection
+            span.co-label Total partial:
+            span.co-info $ 99.99
+          .co-subsection
+            span.co-label Shipping:
+            span.co-info Free
+        .co-section.co-dicount-container
+          .co-label Discounts Applied:
+          .co-subsection
+            span.co-info Membership
+            span.co-info - $30.00
+        .co-hr 
+        .co-section
+          .co-subsection
+            span.co-label Total:
+            span.co-info $ 69.99
+        .co-section
+          a.co-button.global-button(href="#") Checkout
+
+
+

@@ -192,3 +192,5 @@ Notes on what [saveUninitialized](https://github.com/expressjs/session/issues/27
 [This video](https://www.youtube.com/watch?v=F-sFp_AvHc8) in particular was really helpful to get a good understanding of the big picture of how things work.
 
 [MDN Documentation for Async](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Displaying_data/flow_control_using_async).
+
+[How to push records to mongodb array](https://attacomsian.com/blog/mongoose-push-pull-items-from-array).
