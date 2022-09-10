@@ -1,8 +1,10 @@
 const { body, validationResult } = require('express-validator');
+const async = require('async');
 
 const User = require('../models/user');
 const Product = require('../models/product');
 const Flavor = require('../models/flavor');
+const Cart = require('../models/cart');
 
 exports.home = function (req, res) {
   res.render('home', 
@@ -28,16 +30,97 @@ exports.shop = function (req, res, next) {
     })
 };
 
-exports.cart = function (req, res) {
+exports.cart = function (req, res, next) {
   res.render('cart', 
   { 
     title: 'Cart'
   });
 };
 
-exports.cart_post = function(req, res, next) {
-  console.log(req.body);
-}
+exports.cart_post = [
+  // validate and sanitize fields
+  body('product_option')
+  .not().isEmpty().withMessage('Missing parameter')
+  .trim()
+  .escape(),
+  body('product')
+  .not().isEmpty().withMessage('Missing parameter')
+  .trim()
+  .escape(),
+  body('product_quantity')
+  .not().isEmpty().withMessage('Missing parameter')
+  .trim()
+  .escape(),
+  body('product_flavor')
+  .not().isEmpty().withMessage('Missing parameter')
+  .trim()
+  .escape(),
+  
+  // process request
+  (req, res, next) => {
+    console.log(req.body);
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      // req.body validation gave errors
+      let errorMsg = (errors.array())[0].msg
+      let err = new Error(errorMsg);
+      return next(err);
+    };
+    
+    // // find index of product option
+    // const productOptionIndex = req.body.product.options.findIndex(element => {
+    //   if (element.weight === req.body.product_option) {
+    //     return true;
+    //   };
+    // });
+    async.waterfall([
+      function(callback) {
+        // check if the user exists. Only logged in users can add things to cart.
+        User.findById(req.session.passport.user)
+          .exec((err, user)=>{
+            if (err) {
+              return next(err);
+            };
+            
+            callback(null, user);
+          });
+      },
+      function(user, callback) {
+        // this function pushes the product to users cart
+        const addToCart = {
+          product: req.body.product,
+          option: req.body.product_option,
+          quantity: req.body.product_quantity,
+          flavor: req.body.product_flavor
+        }
+
+
+        // This function has 4 parameters i.e. filter,
+        // update, options, callback
+        Cart.findOneAndUpdate({ 'author': user.id },
+          {$push: {contents: addToCart}}, 
+          null, 
+          function(err, result) {
+            if (err) {
+              return next(err);
+            };
+
+            callback(null, result)
+          });
+      },
+    ], function(err, result) {
+      if (err) {
+        return next(err);
+      };
+      console.log(result)
+      res.redirect('/cart');
+    })
+
+
+    
+  }
+]
 
 exports.product_detail = function (req, res, next) {
   Product.findById(req.params.id)

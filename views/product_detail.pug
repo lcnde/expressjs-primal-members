@@ -23,6 +23,7 @@ block content
           //- this form is to send data
           form.display-none(action='/add-to-cart' method='post' id='submit-product')
             input(type='text' id='option' name='product_option' value=selected_product)
+            input(type='text' name='product' value=product.id)
           .card(action='#')
             .name
               h1 #{product.name}
@@ -74,7 +75,7 @@ block content
               span.title Select Flavor
               .flavors
                 each flavor in product.flavor
-                  input.display-none(type='radio' id=`flavor_${flavor.name}` name='product_flavor' value=`${flavor.name}` form='submit-product' required)
+                  input.display-none(type='radio' id=`flavor_${flavor.name}` name='product_flavor' value=`${flavor.id}` form='submit-product' required)
                   label(for=`flavor_${flavor.name}`).flavor-container
                     .flavor-photo
                       img(src=flavor.photo_url, alt="flavor photo")
