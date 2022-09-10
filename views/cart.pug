@@ -8,26 +8,27 @@ block content
   .content
     .cart-page
       .products-container
-        .product-card
-          .product-photo-container
-            img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1662472339/express-members-only/products/bcaa_chj6nl.png", alt="product photo")
-          .product-info-container
-            .remove-from-cart-container
-              i.bi.bi-x-lg
-            .product-details
-              span.product-name Creatine Monohydrate
-              span.product-flavor Flavor: Chocolate
-            .bottom-container
-              .quantity-container
-                span.remove-quantity.quantity-controller -
-                span.quantity 1
-                span.add-quantity.quantity-controller +
-              .price-container
-                .discount-container
-                  .member-logo-container
-                    img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
-                  span.discount-applied Members Discount Applied:
-                span.product-price $ 50.99
+        for cartProduct in cartContents
+          .product-card
+            .product-photo-container
+              img(src=cartProduct.product.photo_url, alt="product photo")
+            .product-info-container
+              .remove-from-cart-container
+                i.bi.bi-x-lg
+              .product-details
+                span.product-name #{cartProduct.product.name} #{cartProduct.option}
+                span.product-flavor Flavor: #{cartProduct.flavor.name}
+              .bottom-container
+                .quantity-container
+                  span.remove-quantity.quantity-controller -
+                  span.quantity #{cartProduct.quantity}
+                  span.add-quantity.quantity-controller +
+                .price-container
+                  .discount-container
+                    .member-logo-container
+                      img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
+                    span.discount-applied Members Discount Applied:
+                  span.product-price $ 50.99
       .checkout-container
         .co-section
           span.co-summary Summary

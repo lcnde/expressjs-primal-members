@@ -31,9 +31,37 @@ exports.shop = function (req, res, next) {
 };
 
 exports.cart = function (req, res, next) {
-  res.render('cart', 
-  { 
-    title: 'Cart'
+
+  async.waterfall([
+    function(callback) {
+      Cart.findOne({'owner': req.session.passport.user})
+        .populate(('contents.product'))
+        .populate(('contents.flavor'))
+        .exec(function(err, cart) {
+          if (err) {
+            return next(err);
+          };
+
+          callback(null, cart);
+        });
+    },
+  ], function(err, result) {
+    if (err) {
+      return next(err);
+    };
+
+    const cartContents = result.contents;
+
+    
+
+
+
+    // success
+    res.render('cart', 
+    { 
+      title: 'Cart',
+      cartContents: cartContents
+    });
   });
 };
 
@@ -68,12 +96,6 @@ exports.cart_post = [
       return next(err);
     };
     
-    // // find index of product option
-    // const productOptionIndex = req.body.product.options.findIndex(element => {
-    //   if (element.weight === req.body.product_option) {
-    //     return true;
-    //   };
-    // });
     async.waterfall([
       function(callback) {
         // check if the user exists. Only logged in users can add things to cart.
