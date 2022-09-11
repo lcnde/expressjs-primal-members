@@ -153,56 +153,61 @@ exports.cart_post = [
               callback(null, result)
             });
         },
+        function(result, callback) {
+          // inside the cart, group the products (by summing the quantity) that have the same details.
+          Cart.findOne({ 'owner': req.session.passport.user })
+          .populate('contents.product', 'id')
+          .populate('contents.flavor', 'id')
+          .exec((err, cart) => {
+            if (err) {
+              return next(err);
+            };
+            
+            let cartContents = cart.contents;
+            // this is a variable that will store the grouped products
+            let groupedCartContents = [];
+  
+            // store all the products that are equal in the same record
+            for (let i = 0; i < cartContents.length; i++) {
+              let item = cartContents[i];
+
+              cartContents[i] = {}
+
+              for (let j = 0; j < cartContents.length; j++) {
+                if (item.product === cartContents[j].product &&
+                    item.option === cartContents[j].option &&
+                    item.flavor === cartContents[j].flavor) {
+                      item.quantity += cartContents[j].quantity;
+                      cartContents[j] = {};
+                    };
+              };
+  
+              if (item.quantity > 0) {
+                groupedCartContents.push(item);
+              };
+            };
+            
+            callback(null, groupedCartContents);
+          });
+        },
       ], function(err, result) {
         if (err) {
           return next(err);
         };
-        
-        res.redirect('/cart');
+
+        // update the cart after we grouped the records with the same details
+        Cart.findOneAndUpdate({ 'owner': req.session.passport.user },
+        {contents: result}, 
+        null, 
+        function(err, result) {
+          if (err) {
+            return next(err);
+          };
+
+          res.redirect('/cart');
+        });
       });
 
-      // inside the cart, group the products (by summing the quantity) that have the same details.
-      // this action will now slow down user browsing because it is performed after the user was redirected to another page
-      async.waterfall([
-        function(callback) {
-          Cart.findOne({ 'owner': req.session.passport.user })
-            .populate('contents.product', 'id')
-            .populate('contents.flavor', 'id')
-            .exec((err, cart) => {
-              if (err) {
-                return next(err);
-              };
-
-              callback(null, cart);
-            });
-          },
-          function(cart, callback) {
-          let cartContents = cart.contents;
-          // this is a variable that will store the grouped products
-          let groupedCartContents = [];
-
-          // store all the products that are equal in the same record
-          for (let i = 0; i < cartContents.length; i++) {
-            let counter = 0;
-            for (let j = 0; j < cartContents.length; j++) {
-              if (cartContents[i].product === cartContents[j].product &&
-                  cartContents[i].option === cartContents[j].option &&
-                  cartContents[i].flavor === cartContents[j].flavor) {
-                    counter++;
-                    
-                  }
-            };
-
-            groupedCartContents.push(counter);
-          }
-
-
-
-          callback(null, groupedCartContents);
-        },
-      ], function(err, results) {
-        console.log(results);
-      });
 
       return;
     };
