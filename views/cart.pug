@@ -16,9 +16,9 @@ block content
                 img(src=cartProduct.product.photo_url, alt="product photo")
               .product-info-container
                 .remove-from-cart-container
-                  form.display-none(action='/delete-from-cart' method='post' id='delete-product')
+                  form.display-none(action='/delete-from-cart' method='post' id=`delete-product-${cartProduct._id}`)
                     input(type='text' id='product_id' name='product_id' value=cartProduct._id)
-                  button(type='submit' form='delete-product').delete-product
+                  button(type='submit' form=`delete-product-${cartProduct._id}`).delete-product
                     i.bi.bi-x-lg
                 .product-details
                   span.product-name #{cartProduct.product.name} #{cartProduct.option}
