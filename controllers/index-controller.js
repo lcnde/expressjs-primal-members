@@ -31,38 +31,59 @@ exports.shop = function (req, res, next) {
 };
 
 exports.cart = function (req, res, next) {
+  // console.log(req.session)
 
-  async.waterfall([
-    function(callback) {
-      Cart.findOne({'owner': req.session.passport.user})
-        .populate(('contents.product'))
-        .populate(('contents.flavor'))
-        .exec(function(err, cart) {
-          if (err) {
-            return next(err);
-          };
+  if (req.session.passport) {
+    async.waterfall([
+      function(callback) {
+        Cart.findOne({'owner': req.session.passport.user})
+          .populate(('contents.product'))
+          .populate(('contents.flavor'))
+          .exec(function(err, cart) {
+            if (err) {
+              return next(err);
+            };
+  
+            callback(null, cart);
+          });
+      },
+    ], function(err, result) {
+      if (err) {
+        return next(err);
+      };
+  
 
-          callback(null, cart);
-        });
-    },
-  ], function(err, result) {
-    if (err) {
-      return next(err);
-    };
+      const rawCartContents = result.contents;
+      
+      // we remove product.options and product.flavor since they are a list of all options and flavors available for that product. We don't need these 2 lists since we already have option and flavor selected by the user.
+      const filteredCartContents = rawCartContents.map(item => ({
+        product: {
+          _id: item.product.id,
+          name: item.product.name,
+          description: item.product.description,
+          photo_url: item.product.photo_url,
+        },
+        option: item.option,
+        quantity: item.quantity,
+        flavor: item.flavor,
+        _id: item.id
+      }));  
 
-    const cartContents = result.contents;
+      // console.log(filteredCartContents);
 
-    
-
-
-
-    // success
-    res.render('cart', 
-    { 
-      title: 'Cart',
-      cartContents: cartContents
+      // success
+      res.render('cart', 
+      { 
+        title: 'Cart',
+        cartContents: filteredCartContents,
+      });
     });
-  });
+  } else {
+    res.render('cart', {
+      title: 'Cart'
+    })
+  }
+
 };
 
 exports.cart_post = [
@@ -86,7 +107,7 @@ exports.cart_post = [
   
   // process request
   (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -96,50 +117,98 @@ exports.cart_post = [
       return next(err);
     };
     
-    async.waterfall([
-      function(callback) {
-        // check if the user exists. Only logged in users can add things to cart.
-        User.findById(req.session.passport.user)
-          .exec((err, user)=>{
-            if (err) {
-              return next(err);
+    if (req.session.passport) {
+      async.waterfall([
+        function(callback) {
+          // check if the user exists. Only logged in users can add things to cart.
+          User.findById(req.session.passport.user)
+            .exec((err, user)=>{
+              if (err) {
+                return next(err);
+              };
+              
+              callback(null, user);
+            });
+        },
+        function(user, callback) {
+          // this function pushes the product to users cart
+          const addToCart = {
+            product: req.body.product,
+            option: req.body.product_option,
+            quantity: req.body.product_quantity,
+            flavor: req.body.product_flavor
+          }
+  
+  
+          // This function has 4 parameters i.e. filter,
+          // update, options, callback
+          Cart.findOneAndUpdate({ 'owner': user.id },
+            {$push: {contents: addToCart}}, 
+            null, 
+            function(err, result) {
+              if (err) {
+                return next(err);
+              };
+  
+              callback(null, result)
+            });
+        },
+      ], function(err, result) {
+        if (err) {
+          return next(err);
+        };
+        
+        res.redirect('/cart');
+      });
+
+      // inside the cart, group the products (by summing the quantity) that have the same details.
+      // this action will now slow down user browsing because it is performed after the user was redirected to another page
+      async.waterfall([
+        function(callback) {
+          Cart.findOne({ 'owner': req.session.passport.user })
+            .populate('contents.product', 'id')
+            .populate('contents.flavor', 'id')
+            .exec((err, cart) => {
+              if (err) {
+                return next(err);
+              };
+
+              callback(null, cart);
+            });
+          },
+          function(cart, callback) {
+          let cartContents = cart.contents;
+          // this is a variable that will store the grouped products
+          let groupedCartContents = [];
+
+          // store all the products that are equal in the same record
+          for (let i = 0; i < cartContents.length; i++) {
+            let counter = 0;
+            for (let j = 0; j < cartContents.length; j++) {
+              if (cartContents[i].product === cartContents[j].product &&
+                  cartContents[i].option === cartContents[j].option &&
+                  cartContents[i].flavor === cartContents[j].flavor) {
+                    counter++;
+                    
+                  }
             };
-            
-            callback(null, user);
-          });
-      },
-      function(user, callback) {
-        // this function pushes the product to users cart
-        const addToCart = {
-          product: req.body.product,
-          option: req.body.product_option,
-          quantity: req.body.product_quantity,
-          flavor: req.body.product_flavor
-        }
+
+            groupedCartContents.push(counter);
+          }
 
 
-        // This function has 4 parameters i.e. filter,
-        // update, options, callback
-        Cart.findOneAndUpdate({ 'author': user.id },
-          {$push: {contents: addToCart}}, 
-          null, 
-          function(err, result) {
-            if (err) {
-              return next(err);
-            };
 
-            callback(null, result)
-          });
-      },
-    ], function(err, result) {
-      if (err) {
-        return next(err);
-      };
-      console.log(result)
-      res.redirect('/cart');
-    })
+          callback(null, groupedCartContents);
+        },
+      ], function(err, results) {
+        console.log(results);
+      });
 
+      return;
+    };
 
+    // redirect the user to login if he tries to add a product to cart and he is not logged in
+    res.redirect('/login');
     
   }
 ]
