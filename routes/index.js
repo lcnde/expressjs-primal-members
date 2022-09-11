@@ -20,7 +20,7 @@ router.get('/shop', indexController.shop);
 router.get('/product/:name/:id/:option', indexController.product_detail);
 
 // see cart page
-router.get('/cart', indexController.cart);
+router.get('/cart', indexController.cart_get);
 
 // add product to cart
 router.post('/add-to-cart', indexController.cart_post);

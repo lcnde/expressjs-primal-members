@@ -10,6 +10,7 @@ block content
       if locals.currentUser
         .products-container
           for cartProduct in cartContents
+            //- p #{cartProduct._id}
             .product-card
               .product-photo-container
                 img(src=cartProduct.product.photo_url, alt="product photo")
@@ -25,31 +26,38 @@ block content
                     span.quantity #{cartProduct.quantity}
                     span.add-quantity.quantity-controller +
                   .price-container
-                    .discount-container
-                      .member-logo-container
-                        img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
-                      span.discount-applied Members Discount Applied:
-                    span.product-price $ 50.99
+                    if locals.currentUser && locals.checkMember
+                      .discount-container
+                        .member-logo-container
+                          img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
+                        span.discount-applied Members Discount Applied:
+                      span.product-price $ #{cartProduct.totalMembersPrice}
+                    else
+                      span.product-price $ #{cartProduct.totalPrice}
         .checkout-container
           .co-section
             span.co-summary Summary
           .co-section
             .co-subsection
               span.co-label Total partial:
-              span.co-info $ 99.99
+              span.co-info $ #{checkoutPrice.checkoutTotal}
             .co-subsection
               span.co-label Shipping:
               span.co-info Free
-          .co-section.co-dicount-container
-            .co-label Discounts Applied:
-            .co-subsection
-              span.co-info Membership
-              span.co-info - $30.00
+          if locals.currentUser && locals.checkMember
+            .co-section.co-dicount-container
+              .co-label Discounts Applied:
+              .co-subsection
+                span.co-info Membership
+                span.co-info - $ #{checkoutPrice.checkoutMembersDiscount}
           .co-hr 
           .co-section
             .co-subsection
               span.co-label Total:
-              span.co-info $ 69.99
+              if locals.currentUser && locals.checkMember
+                span.co-info $ #{checkoutPrice.checkoutMembersTotal}
+              else
+                span.co-info $ #{checkoutPrice.checkoutTotal}
           .co-section
             a.co-button.global-button(href="#") Checkout
       else 

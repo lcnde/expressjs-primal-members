@@ -30,7 +30,7 @@ exports.shop = function (req, res, next) {
     })
 };
 
-exports.cart = function (req, res, next) {
+exports.cart_get = function (req, res, next) {
   // console.log(req.session)
 
   if (req.session.passport) {
@@ -51,12 +51,42 @@ exports.cart = function (req, res, next) {
       if (err) {
         return next(err);
       };
-  
 
       const rawCartContents = result.contents;
       
+      // we add the price and members_price for each cart item
+      const pricedCartContents = rawCartContents.map(item => {
+        let price = 0;
+        let members_price = 0;
+        for (let i = 0; i < item.product.options.length; i++) {
+          if (item.option === item.product.options[i].weight) {
+            price = item.product.options[i].cost.price;
+            members_price = item.product.options[i].cost.members_price;
+          };
+        };
+
+        let totalPrice = price * item.quantity;
+        let totalMembersPrice = members_price * item.quantity;
+
+
+        return {
+          product: {
+            _id: item.product.id,
+            name: item.product.name,
+            description: item.product.description,
+            photo_url: item.product.photo_url,
+          },
+          option: item.option,
+          quantity: item.quantity,
+          flavor: item.flavor,
+          totalPrice: totalPrice,
+          totalMembersPrice: totalMembersPrice,
+          _id: item._id
+        }
+      })
+      
       // we remove product.options and product.flavor since they are a list of all options and flavors available for that product. We don't need these 2 lists since we already have option and flavor selected by the user.
-      const filteredCartContents = rawCartContents.map(item => ({
+      const filteredCartContents = pricedCartContents.map(item => ({
         product: {
           _id: item.product.id,
           name: item.product.name,
@@ -65,9 +95,34 @@ exports.cart = function (req, res, next) {
         },
         option: item.option,
         quantity: item.quantity,
+        totalPrice: item.totalPrice,
+        totalMembersPrice: item.totalMembersPrice,
         flavor: item.flavor,
-        _id: item.id
+        _id: item._id
       }));  
+
+      console.log(filteredCartContents)
+
+      // function to calculate the checkout prices
+      const calcCheckout = (arr) => {
+        let checkoutTotal = 0;
+        let checkoutMembersTotal = 0;
+        let checkoutMembersDiscount = 0;
+
+        for (let i = 0; i < arr.length; i++) {
+          checkoutTotal += arr[i].totalPrice;
+          checkoutMembersTotal += arr[i].totalMembersPrice;
+          checkoutMembersDiscount = checkoutTotal - checkoutMembersTotal;
+        };
+
+        return {
+          checkoutTotal: checkoutTotal.toFixed(2),
+          checkoutMembersTotal: checkoutMembersTotal.toFixed(2),
+          checkoutMembersDiscount: checkoutMembersDiscount.toFixed(2),
+        };
+      };
+
+      const checkoutPrice = calcCheckout(filteredCartContents);
 
       // console.log(filteredCartContents);
 
@@ -76,6 +131,7 @@ exports.cart = function (req, res, next) {
       { 
         title: 'Cart',
         cartContents: filteredCartContents,
+        checkoutPrice: checkoutPrice
       });
     });
   } else {

@@ -149,11 +149,21 @@ This system was made because if the user was not logged in and you checked for `
 6. When it finds it, it takes the `price` and `members_price` of that option and puts it inside the `pricing` variable.
 7. The `pricing` variable and `:option` value are passed inside the controller when rendering the product_detail page. Along with them there are also other parameters passed, like the full product and the title of the page.
 
-## Submitting product info 
+## Submitting product info from view
 1. The product page contains 2 forms. 
 2. The first form (`id=redirect-option`) is is tied to the `select` tag for the product option.\
 This form sole purpose is to reload the product page with the correct price info every time the user selects another product option. This form will not partecipate in sending data to the cart.\
 3. The second form (`id=submit-product`) is the form actually used to send data to the cart. It will contain the inputs for the product details. The real input for the product option will be hidden and it will be tied to the parameter present in the product url (meaning that its value will be equal to the parameter `:option` from the url. this is because the `select` tag for the product url that is visible is there just to change the page of the product, not to actually send data.).
+
+# Cart_post
+The function starts by validating and sanitizing data.
+
+After the validation ends, we check that the user is logged in. because only users with an account can use the cart (which is created at the moment that a user signs up).
+
+If the user is signed in then we have a `async.waterfall` function that does the following: 
+1. Finds the cart of the user
+2. Checks if the product with the data that was submitted in the post request already exists in the database. If there is already a product with the same specifications, then it will increment the quantity of that product, to avoid creating duplicates. If the product does not already exist in the cart, then it will create a new record since there is no way to increment the quantity.
+3. At last, it will save the contents of the cart to database and redirect the user to /cart.
 
 ## Useful resources
 [In this stackoverflow answer](https://stackoverflow.com/questions/7562095/redirect-on-select-option-in-select-box) it shows how to make a `select` tag redirect to another page every time you change `option`.
