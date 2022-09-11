@@ -49,6 +49,12 @@
           .remove-from-cart-container {
             display: grid;
             justify-content: end;
+
+            .delete-product {
+              background-color: $transparent;
+              border:none;
+              cursor: pointer;
+            }
           }
           .product-details {
             display: flex;

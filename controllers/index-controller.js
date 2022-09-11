@@ -101,7 +101,7 @@ exports.cart_get = function (req, res, next) {
         _id: item._id
       }));  
 
-      console.log(filteredCartContents)
+      // console.log(filteredCartContents)
 
       // function to calculate the checkout prices
       const calcCheckout = (arr) => {
@@ -250,7 +250,21 @@ exports.cart_post = [
     res.redirect('/login')
     
   }
-]
+];
+
+exports.cart_delete_post = (req, res, next) => {
+  // console.log(req.body)
+  Cart.updateOne(
+    {'owner': req.session.passport.user},
+    {$pull: {contents: {_id: req.body.product_id}}},
+  ).exec((err, result) => {
+    if (err) {
+      return next(err);
+    };
+
+    res.redirect('/cart');
+  })
+}
 
 exports.product_detail = function (req, res, next) {
   Product.findById(req.params.id)

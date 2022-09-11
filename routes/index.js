@@ -25,6 +25,9 @@ router.get('/cart', indexController.cart_get);
 // add product to cart
 router.post('/add-to-cart', indexController.cart_post);
 
+// delete product from cart
+router.post('/delete-from-cart', indexController.cart_delete_post)
+
 
 
 
