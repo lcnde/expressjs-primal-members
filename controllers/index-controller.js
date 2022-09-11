@@ -117,103 +117,81 @@ exports.cart_post = [
       return next(err);
     };
     
-    if (req.session.passport) {
+    // check that the user is logged in 
+    if (req.session.passport.user) {
       async.waterfall([
         function(callback) {
-          // check if the user exists. Only logged in users can add things to cart.
-          User.findById(req.session.passport.user)
-            .exec((err, user)=>{
+          // find the cart of the user
+          Cart.findOne({'owner': req.session.passport.user})
+            .exec((err, cart) => {
               if (err) {
                 return next(err);
               };
-              
-              callback(null, user);
+
+              callback(null, cart)
             });
         },
-        function(user, callback) {
-          // this function pushes the product to users cart
-          const addToCart = {
+        function(result, callback) {
+          let cart = result.contents;
+          let item = {
             product: req.body.product,
             option: req.body.product_option,
-            quantity: req.body.product_quantity,
-            flavor: req.body.product_flavor
-          }
-  
-  
-          // This function has 4 parameters i.e. filter,
-          // update, options, callback
-          Cart.findOneAndUpdate({ 'owner': user.id },
-            {$push: {contents: addToCart}}, 
-            null, 
+            quantity: parseInt(req.body.product_quantity),
+            flavor: req.body.product_flavor,
+          };
+          let isPresent = false;
+          // console.log(item.quantity);
+          // console.log(cart[0].product.valueOf());
+
+          // check if the item already exists in the cart, and if it does add new quantity to it
+          for (let i = 0; i < cart.length; i++) {
+            if (item.product === cart[i].product.valueOf() &&
+                item.option === cart[i].option &&
+                item.flavor === cart[i].flavor.valueOf()){
+                  cart[i].quantity += item.quantity;
+                  isPresent = true;
+                };
+          };
+
+          // if the item does not already exist in the cart add a new record
+          if (isPresent === false) {
+            cart.push(item);
+          };
+
+          // console.log(cart);
+
+          callback(null, cart);
+        },
+        function(result, callback) {
+          // the cart is nice and organized so now we can update it in the database
+          Cart.findOneAndUpdate(
+            {'owner': req.session.passport.user},
+            {'contents': result},
+            null,
             function(err, result) {
               if (err) {
                 return next(err);
               };
-  
-              callback(null, result)
-            });
-        },
-        function(result, callback) {
-          // inside the cart, group the products (by summing the quantity) that have the same details.
-          Cart.findOne({ 'owner': req.session.passport.user })
-          .populate('contents.product', 'id')
-          .populate('contents.flavor', 'id')
-          .exec((err, cart) => {
-            if (err) {
-              return next(err);
-            };
-            
-            let cartContents = cart.contents;
-            // this is a variable that will store the grouped products
-            let groupedCartContents = [];
-  
-            // store all the products that are equal in the same record
-            for (let i = 0; i < cartContents.length; i++) {
-              let item = cartContents[i];
 
-              cartContents[i] = {}
-
-              for (let j = 0; j < cartContents.length; j++) {
-                if (item.product === cartContents[j].product &&
-                    item.option === cartContents[j].option &&
-                    item.flavor === cartContents[j].flavor) {
-                      item.quantity += cartContents[j].quantity;
-                      cartContents[j] = {};
-                    };
-              };
-  
-              if (item.quantity > 0) {
-                groupedCartContents.push(item);
-              };
-            };
-            
-            callback(null, groupedCartContents);
-          });
+              callback(null, result);
+            },
+          );
         },
       ], function(err, result) {
         if (err) {
           return next(err);
         };
 
-        // update the cart after we grouped the records with the same details
-        Cart.findOneAndUpdate({ 'owner': req.session.passport.user },
-        {contents: result}, 
-        null, 
-        function(err, result) {
-          if (err) {
-            return next(err);
-          };
+        // console.log(result)
 
-          res.redirect('/cart');
-        });
-      });
-
+        res.redirect('/cart')
+      })
 
       return;
     };
 
-    // redirect the user to login if he tries to add a product to cart and he is not logged in
-    res.redirect('/login');
+    // if the user is not logged in then redirect
+    res.redirect('/login')
     
   }
 ]
