@@ -34,16 +34,16 @@ block content
                         .member-logo-container
                           img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
                         span.discount-applied Members Discount Applied:
-                      span.product-price $ #{cartProduct.totalMembersPrice}
+                      span.product-price $ #{cartProduct.totalMembersPrice.toFixed(2)}
                     else
-                      span.product-price $ #{cartProduct.totalPrice}
+                      span.product-price $ #{cartProduct.totalPrice.toFixed(2)}
         .checkout-container
           .co-section
             span.co-summary Summary
           .co-section
             .co-subsection
               span.co-label Total partial:
-              span.co-info $ #{checkoutPrice.checkoutTotal}
+              span.co-info $ #{checkoutPrice.checkoutTotal.toFixed(2)}
             .co-subsection
               span.co-label Shipping:
               span.co-info Free
@@ -52,15 +52,15 @@ block content
               .co-label Discounts Applied:
               .co-subsection
                 span.co-info Membership
-                span.co-info - $ #{checkoutPrice.checkoutMembersDiscount}
+                span.co-info - $ #{checkoutPrice.checkoutMembersDiscount.toFixed(2)}
           .co-hr 
           .co-section
             .co-subsection
               span.co-label Total:
               if locals.currentUser && locals.checkMember
-                span.co-info $ #{checkoutPrice.checkoutMembersTotal}
+                span.co-info $ #{checkoutPrice.checkoutMembersTotal.toFixed(2)}
               else
-                span.co-info $ #{checkoutPrice.checkoutTotal}
+                span.co-info $ #{checkoutPrice.checkoutTotal.toFixed(2)}
           .co-section
             a.co-button.global-button(href="#") Checkout
       else 

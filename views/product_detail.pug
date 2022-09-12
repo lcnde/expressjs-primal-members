@@ -33,7 +33,7 @@ block content
                   .normal-price-container.price-container
                     .price
                       .line
-                      span $ #{pricing.price}
+                      span $ #{pricing.price.toFixed(2)}
                     .stock
                       span In Stock
                   .member-discount-container
@@ -41,13 +41,13 @@ block content
                       img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="logo")
                     span.member-discount Members Discount Applied:
                   .member-price-container.price-container
-                    span.price $ #{pricing.members_price}
+                    span.price $ #{pricing.members_price.toFixed(2)}
                     span.stock In Stock
               else
                 .member
                   .normal-price-container.price-container
                     .price
-                      span $ #{pricing.price}
+                      span $ #{pricing.price.toFixed(2)}
                     .stock
                       span In Stock
             .options
@@ -84,7 +84,7 @@ block content
               button.buy-button.global-button(type='submit' form='submit-product') Buy Now
           if !locals.currentUser && !locals.checkMember
             .get-membership
-              span Get our membership and pay only #[span.m-price $#{pricing.members_price}]
+              span Get our membership and pay only #[span.m-price $#{pricing.members_price.toFixed(2)}]
               a.get-m-button(href='/membership')
                 .m-logo
                   img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="logo")

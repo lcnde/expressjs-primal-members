@@ -25,9 +25,9 @@ block content
           .product-photo
             img(src=product.photo_url, alt="product photo")
           .product-info
-            p.price $#{product.options[0].cost.price}
+            p.price $#{product.options[0].cost.price.toFixed(2)}
             p.name #{product.name} 
             .members-price
               .logo-container
                 img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="membership logo")
-              p Members: $#{product.options[0].cost.members_price}
+              p Members: $#{product.options[0].cost.members_price.toFixed(2)}
