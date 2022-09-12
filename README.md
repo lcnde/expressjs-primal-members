@@ -20,25 +20,6 @@ By this point, anyone who comes to the site should be able to see a list of all 
 
 There will be no admin panel to add products because that's out of the scope of this project.
 
-# Routes
-Index: 
-* get /
-* get /talk-board
-* get /shop
-* get /sign-in
-* get /sign-up
-* get /membership
-* get /cart
-* post /sign-in
-* post /sign-up
-* post /log-out
-
-Product:
-* get /product/:product_id/:product_name
-
-
-
-
 # Using Include and Mixins
 Using only `include` will not allow you to use variables.
 Using `include` and then using a mixin from the page you included will allow you to use variables that you can pass inside the mixin. (This was originally intended to be used to pass stylesheets but I opted to pass them with the controller.)
