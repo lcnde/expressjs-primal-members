@@ -171,13 +171,17 @@
       z-index: 2;
       width: 150px;
       padding: 5px;
+      border: 1px solid rgb(230, 230, 230);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.24);
 
       background-color: $background-gray;
       button {
         background-color: $transparent;
         border: none;
         width: 100%;
+        text-align: start;
         cursor: pointer;
+        font-size: 16px;
       }
     }
     #open-logout-dropdown:checked ~ .logout-dropdown-container {

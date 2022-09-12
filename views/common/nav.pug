@@ -15,7 +15,6 @@ mixin nav
     .logout-dropdown-container
       form(action="/logout" method='post')
         button(type='submit') Logout
-
     .account.no-select
       if locals.currentUser
         label.logout-dropdown-label(for='open-logout-dropdown')
