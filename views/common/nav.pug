@@ -40,7 +40,6 @@ mixin nav
         nav.nav-links
           ul 
             +link-list
-            li #[a(href='/cart') Cart]
             if locals.currentUser
               li.mobile-logout
                 form(action="/logout" method='post')
