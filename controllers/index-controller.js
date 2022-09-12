@@ -46,12 +46,12 @@ exports.cart_get = function (req, res, next) {
   
             callback(null, cart);
           });
-      },
+        },
     ], function(err, result) {
       if (err) {
         return next(err);
       };
-
+      
       const rawCartContents = result.contents;
       
       // we add the price and members_price for each cart item
@@ -75,6 +75,7 @@ exports.cart_get = function (req, res, next) {
             name: item.product.name,
             description: item.product.description,
             photo_url: item.product.photo_url,
+            default_url: item.product.default_url,
           },
           option: item.option,
           quantity: item.quantity,
@@ -92,6 +93,7 @@ exports.cart_get = function (req, res, next) {
           name: item.product.name,
           description: item.product.description,
           photo_url: item.product.photo_url,
+          default_url: item.product.default_url,
         },
         option: item.option,
         quantity: item.quantity,

@@ -11,7 +11,7 @@ block content
         .cart-page
           .products-container
             for cartProduct in cartContents
-              //- p #{cartProduct._id}
+              //- p #{cartProduct.product.default_url}
               .product-card
                 .product-photo-container
                   img(src=cartProduct.product.photo_url, alt="product photo")
@@ -22,7 +22,7 @@ block content
                     button(type='submit' form=`delete-product-${cartProduct._id}`).delete-product
                       i.bi.bi-x-lg
                   .product-details
-                    span.product-name #{cartProduct.product.name} #{cartProduct.option}
+                    a(href=cartProduct.product.default_url).product-name #{cartProduct.product.name} #{cartProduct.option}
                     span.product-flavor Flavor: #{cartProduct.flavor.name}
                   .bottom-container
                     .quantity-container
