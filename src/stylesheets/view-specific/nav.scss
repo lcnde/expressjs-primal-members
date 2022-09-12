@@ -1,6 +1,6 @@
 @import 'variables.scss';
 @import '../css-reset.scss';
-@import './global.scss';
+@import 'global.scss';
 
 @mixin cart-container {
   align-self:  center;
@@ -10,25 +10,6 @@
   a {
     color: $white;
     position: relative;
-
-    .number-container{
-      position: absolute;
-      background-color: white;
-      border-radius: 100%;
-      color: $black;
-      bottom: -5px;
-      right: -5px;
-      height: 15px;
-      width: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .number {
-        font-weight: 600;
-        font-size: 0.8em;
-      }
-    }
 
     .bi-bag {
       font-size: 30px;
