@@ -264,7 +264,39 @@ exports.cart_delete_post = (req, res, next) => {
 
     res.redirect('/cart');
   })
-}
+};
+
+exports.cart_update_quantity = (req, res, next) => {
+  if (req.body.product_add === 'true'){
+    // add +1 to product quantity
+    Cart.updateOne(
+      {'owner': req.session.passport.user, 'contents._id': req.body.product_id},
+      {$inc: {'contents.$.quantity': 1}}
+      ).exec((err, result) => {
+        if (err) {
+          console.log(err)
+          return next(err);
+        };
+
+        res.redirect('/cart');
+      });
+  };
+
+  if (req.body.product_subtract === 'true') {
+    // remove +1 to product quantity
+    Cart.updateOne(
+      {'owner': req.session.passport.user, 'contents._id': req.body.product_id},
+      {$inc: {'contents.$.quantity': -1}}
+      ).exec((err, result) => {
+        if (err) {
+          console.log(err)
+          return next(err);
+        };
+
+        res.redirect('/cart');
+      });
+  };
+};
 
 exports.product_detail = function (req, res, next) {
   Product.findById(req.params.id)

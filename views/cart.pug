@@ -25,9 +25,17 @@ block content
                   span.product-flavor Flavor: #{cartProduct.flavor.name}
                 .bottom-container
                   .quantity-container
-                    span.remove-quantity.quantity-controller -
+                    form.display-none(action='/edit-quantity' method='post' id=`add-quantity-${cartProduct._id}`)
+                      input(type='text' name='product_add' value='true')
+                      input(type='text' id='product_id' name='product_id' value=cartProduct._id)
+                    form.display-none(action='/edit-quantity' method='post' id=`subtract-quantity-${cartProduct._id}`)
+                      input(type='text' name='product_subtract' value='true')
+                      input(type='text' id='product_id' name='product_id' value=cartProduct._id)
+                    button.remove-quantity.quantity-controller(type='submit' form=`subtract-quantity-${cartProduct._id}`)
+                      span -
                     span.quantity #{cartProduct.quantity}
-                    span.add-quantity.quantity-controller +
+                    button.add-quantity.quantity-controller(type='submit' form=`add-quantity-${cartProduct._id}`)
+                      span +
                   .price-container
                     if locals.currentUser && locals.checkMember
                       .discount-container

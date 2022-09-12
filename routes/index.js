@@ -28,6 +28,9 @@ router.post('/add-to-cart', indexController.cart_post);
 // delete product from cart
 router.post('/delete-from-cart', indexController.cart_delete_post);
 
+// add or remove product quantity
+router.post('/edit-quantity', indexController.cart_update_quantity);
+
 
 
 
