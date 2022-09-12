@@ -13,7 +13,7 @@ exports.talkBoard_get = function (req, res, next) {
 
       // successful so render
       res.render('talk-board', {
-        title: 'talkboard',
+        title: 'Primal | Talkboard',
         messages: messages,
       });
     });
@@ -42,7 +42,7 @@ exports.message_post = [
       res.render('talk-board',
       {
         err: errors.array(),
-        title: 'talkboard',
+        title: 'Primal | Talkboard',
         message: messageContent
       });
       return;

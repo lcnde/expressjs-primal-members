@@ -24,7 +24,7 @@ exports.shop = function (req, res, next) {
 
       // success
       res.render('shop', {
-        title: 'shop',
+        title: 'Primal | Shop',
         products: products,
       });
     })
@@ -129,14 +129,14 @@ exports.cart_get = function (req, res, next) {
       // success
       res.render('cart', 
       { 
-        title: 'Cart',
+        title: 'Primal | Cart',
         cartContents: filteredCartContents,
         checkoutPrice: checkoutPrice
       });
     });
   } else {
     res.render('cart', {
-      title: 'Cart'
+      title: 'Primal | Cart'
     })
   }
 
@@ -365,7 +365,7 @@ exports.product_detail = function (req, res, next) {
 exports.membership = function (req, res) {
   res.render('membership', 
   { 
-    title: 'membership'
+    title: 'Primal | Membership'
   });
 };
 
@@ -383,7 +383,7 @@ exports.membership_join = [
 
       if (!errors.isEmpty()) {
         res.render('membership', {
-          title: 'membership',
+          title: 'Primal | Membership',
           err: errors.array(),
         });
         return;
@@ -407,7 +407,7 @@ exports.membership_join = [
       
       // wrongs passcode, render with errors
       res.render('membership', {
-        title: 'membership',
+        title: 'Primal | Membership',
         err: [{msg: 'Wrong passcode'}]
       });
     }
