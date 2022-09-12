@@ -116,9 +116,9 @@ exports.cart_get = function (req, res, next) {
         };
 
         return {
-          checkoutTotal: checkoutTotal.toFixed(2),
-          checkoutMembersTotal: checkoutMembersTotal.toFixed(2),
-          checkoutMembersDiscount: checkoutMembersDiscount.toFixed(2),
+          checkoutTotal: checkoutTotal,
+          checkoutMembersTotal: checkoutMembersTotal,
+          checkoutMembersDiscount: checkoutMembersDiscount
         };
       };
 
