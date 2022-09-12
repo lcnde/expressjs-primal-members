@@ -33,6 +33,10 @@
 
   display: grid;
   grid-template-columns: 1fr 6fr 1fr;
+
+  .logout-dropdown-container {
+    display: none;
+  }
   
   .logo {
     overflow: hidden;
