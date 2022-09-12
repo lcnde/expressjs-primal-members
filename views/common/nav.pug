@@ -13,11 +13,16 @@ mixin cart
 
 mixin nav
   .navigation-container
-    .account  
+    input.display-none(type='checkbox' id='open-logout-dropdown')
+    .logout-dropdown-container
+      form(action="/logout" method='post')
+        button(type='submit') Logout
+
+    .account.no-select
       if locals.currentUser
-        span Welcome #{locals.currentUser.username}
-          form(action="/logout" method='post')
-            button(type='submit') Logout
+        label.logout-dropdown-label(for='open-logout-dropdown')
+          span Welcome #{locals.currentUser.username}
+          i.bi.bi-caret-down-fill
       else
         span #[a(href="/login") Login], User
     .logo

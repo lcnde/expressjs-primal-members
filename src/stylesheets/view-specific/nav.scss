@@ -170,18 +170,45 @@
     height: 70px;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
+    position: relative;
 
     // hide on desktop. 
     // cart container here is refered to the desktop version located inside .navigation-links
     .mobile-menu, .mobile-nav, .cart-container {
       display: none;
     }
+
+    .logout-dropdown-container{
+      display: none; 
+      position: absolute;
+      bottom: -20px;
+      left: 20px;
+      z-index: 2;
+      width: 150px;
+      padding: 5px;
+
+      background-color: $background-gray;
+      button {
+        background-color: $transparent;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+      }
+    }
+    #open-logout-dropdown:checked ~ .logout-dropdown-container {
+      display: block;
+    }
   
     .account {
       display: flex;
       align-items: center;
       padding: 0 20px;
-      grid-column: 1/2;
+
+      .logout-dropdown-label {
+        display: flex;
+        gap: 5px;
+      }
+      
   
       a {
         color: $white;
