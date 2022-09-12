@@ -6,74 +6,76 @@ block stylesheet
 
 block content
   .content
-    .cart-page
-      if locals.currentUser
-        .products-container
-          for cartProduct in cartContents
-            //- p #{cartProduct._id}
-            .product-card
-              .product-photo-container
-                img(src=cartProduct.product.photo_url, alt="product photo")
-              .product-info-container
-                .remove-from-cart-container
-                  form.display-none(action='/delete-from-cart' method='post' id=`delete-product-${cartProduct._id}`)
-                    input(type='text' id='product_id' name='product_id' value=cartProduct._id)
-                  button(type='submit' form=`delete-product-${cartProduct._id}`).delete-product
-                    i.bi.bi-x-lg
-                .product-details
-                  span.product-name #{cartProduct.product.name} #{cartProduct.option}
-                  span.product-flavor Flavor: #{cartProduct.flavor.name}
-                .bottom-container
-                  .quantity-container
-                    form.display-none(action='/edit-quantity' method='post' id=`add-quantity-${cartProduct._id}`)
-                      input(type='text' name='product_add' value='true')
+    if locals.currentUser
+      if cartContents.length != 0
+        .cart-page
+          .products-container
+            for cartProduct in cartContents
+              //- p #{cartProduct._id}
+              .product-card
+                .product-photo-container
+                  img(src=cartProduct.product.photo_url, alt="product photo")
+                .product-info-container
+                  .remove-from-cart-container
+                    form.display-none(action='/delete-from-cart' method='post' id=`delete-product-${cartProduct._id}`)
                       input(type='text' id='product_id' name='product_id' value=cartProduct._id)
-                    form.display-none(action='/edit-quantity' method='post' id=`subtract-quantity-${cartProduct._id}`)
-                      input(type='text' name='product_subtract' value='true')
-                      input(type='text' id='product_id' name='product_id' value=cartProduct._id)
-                    button.remove-quantity.quantity-controller(type='submit' form=`subtract-quantity-${cartProduct._id}`)
-                      span -
-                    span.quantity #{cartProduct.quantity}
-                    button.add-quantity.quantity-controller(type='submit' form=`add-quantity-${cartProduct._id}`)
-                      span +
-                  .price-container
-                    if locals.currentUser && locals.checkMember
-                      .discount-container
-                        .member-logo-container
-                          img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
-                        span.discount-applied Members Discount Applied:
-                      span.product-price $ #{cartProduct.totalMembersPrice.toFixed(2)}
-                    else
-                      span.product-price $ #{cartProduct.totalPrice.toFixed(2)}
-        .checkout-container
-          .co-section
-            span.co-summary Summary
-          .co-section
-            .co-subsection
-              span.co-label Total partial:
-              span.co-info $ #{checkoutPrice.checkoutTotal.toFixed(2)}
-            .co-subsection
-              span.co-label Shipping:
-              span.co-info Free
-          if locals.currentUser && locals.checkMember
-            .co-section.co-dicount-container
-              .co-label Discounts Applied:
+                    button(type='submit' form=`delete-product-${cartProduct._id}`).delete-product
+                      i.bi.bi-x-lg
+                  .product-details
+                    span.product-name #{cartProduct.product.name} #{cartProduct.option}
+                    span.product-flavor Flavor: #{cartProduct.flavor.name}
+                  .bottom-container
+                    .quantity-container
+                      form.display-none(action='/edit-quantity' method='post' id=`add-quantity-${cartProduct._id}`)
+                        input(type='text' name='product_add' value='true')
+                        input(type='text' id='product_id' name='product_id' value=cartProduct._id)
+                      form.display-none(action='/edit-quantity' method='post' id=`subtract-quantity-${cartProduct._id}`)
+                        input(type='text' name='product_subtract' value='true')
+                        input(type='text' id='product_id' name='product_id' value=cartProduct._id)
+                      button.remove-quantity.quantity-controller(type='submit' form=`subtract-quantity-${cartProduct._id}`)
+                        span -
+                      span.quantity #{cartProduct.quantity}
+                      button.add-quantity.quantity-controller(type='submit' form=`add-quantity-${cartProduct._id}`)
+                        span +
+                    .price-container
+                      if locals.currentUser && locals.checkMember
+                        .discount-container
+                          .member-logo-container
+                            img(src="https://res.cloudinary.com/djg52dvw1/image/upload/v1661158616/express-members-only/logo_lowres_wwdllp.png", alt="primal membership logo")
+                          span.discount-applied Members Discount Applied:
+                        span.product-price $ #{cartProduct.totalMembersPrice.toFixed(2)}
+                      else
+                        span.product-price $ #{cartProduct.totalPrice.toFixed(2)}
+          .checkout-container
+            .co-section
+              span.co-summary Summary
+            .co-section
               .co-subsection
-                span.co-info Membership
-                span.co-info - $ #{checkoutPrice.checkoutMembersDiscount.toFixed(2)}
-          .co-hr 
-          .co-section
-            .co-subsection
-              span.co-label Total:
-              if locals.currentUser && locals.checkMember
-                span.co-info $ #{checkoutPrice.checkoutMembersTotal.toFixed(2)}
-              else
+                span.co-label Total partial:
                 span.co-info $ #{checkoutPrice.checkoutTotal.toFixed(2)}
-          .co-section
-            a.co-button.global-button(href="#") Checkout
-      else 
-
-        p.login-to-use-cart You must be logged in to use the cart
+              .co-subsection
+                span.co-label Shipping:
+                span.co-info Free
+            if locals.currentUser && locals.checkMember
+              .co-section.co-dicount-container
+                .co-label Discounts Applied:
+                .co-subsection
+                  span.co-info Membership
+                  span.co-info - $ #{checkoutPrice.checkoutMembersDiscount.toFixed(2)}
+            .co-hr 
+            .co-section
+              .co-subsection
+                span.co-label Total:
+                if locals.currentUser && locals.checkMember
+                  span.co-info $ #{checkoutPrice.checkoutMembersTotal.toFixed(2)}
+                else
+                  span.co-info $ #{checkoutPrice.checkoutTotal.toFixed(2)}
+            .co-section
+              a.co-button.global-button(href="#") Checkout
+      else
+        p Your cart is empty
+    else 
+      p.login-to-use-cart You must be logged in to use the cart
 
 
 
