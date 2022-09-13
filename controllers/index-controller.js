@@ -176,7 +176,7 @@ exports.cart_post = [
     };
     
     // check that the user is logged in 
-    if (req.session.passport.user) {
+    if (req.session.passport) {
       async.waterfall([
         function(callback) {
           // find the cart of the user
