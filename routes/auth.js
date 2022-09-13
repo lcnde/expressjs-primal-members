@@ -76,7 +76,7 @@ router.post('/signup', function(req, res, next) {
             return next(err);
           };
 
-          callback(null, 'done');
+          callback(null, user);
         });
       },
     ], function(err, result) {
@@ -84,8 +84,16 @@ router.post('/signup', function(req, res, next) {
         return next(err);
       };
 
-      // success
-      res.redirect('/');
+      // login user after signup
+      req.login(result, (err) => {
+        if (err) {
+          return next(err);
+        };
+        
+        // success
+        res.redirect('/');
+      });
+
     });
 
 
