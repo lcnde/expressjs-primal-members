@@ -32,7 +32,7 @@ block content
                 span.username.no-member Only members can see usernames
           .body
             .message-content
-              p #{mess.message}
+              p !{mess.message}
             .date-container
               span.date #{mess.date}
               if locals.currentUser && locals.checkAdmin
