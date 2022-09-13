@@ -49,13 +49,13 @@ exports.message_post = [
     }
 
     // success, no errors found
-    // console.log(req.session.passport.user);
-    User.findOne({ id: req.session.passport.user }, (err, user) => {
+    User.findOne({ '_id': req.session.passport.user })
+      .exec((err, user) => {
       if (err) {
         return next(err);
       };
       // success, user exists in the database
-
+      
       // create the message 
       const message = new Message(
         {
