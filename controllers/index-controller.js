@@ -285,18 +285,48 @@ exports.cart_update_quantity = (req, res, next) => {
   };
 
   if (req.body.product_subtract === 'true') {
-    // remove +1 to product quantity
-    Cart.updateOne(
-      {'owner': req.session.passport.user, 'contents._id': req.body.product_id},
-      {$inc: {'contents.$.quantity': -1}}
-      ).exec((err, result) => {
-        if (err) {
-          console.log(err)
-          return next(err);
+    // remove 1 to product quantity
+    async.waterfall([
+      function(callback) {
+        Cart.findOne({
+              'owner': req.session.passport.user
+            }).exec(function(err, item) {
+          callback(null, item)
+        })
+      },
+      function(result, callback) {
+        let cart = result.contents;
+        
+        for (let i = 0; i < cart.length; i++) {
+          // console.log(cart[i]._id, req.body.product_id)
+          if (cart[i]._id.valueOf() === req.body.product_id && cart[i].quantity > 1) {
+            // subtract 1 if item quantity is > 0
+            cart[i].quantity -= 1;
+          };
         };
 
-        res.redirect('/cart');
-      });
+        callback(null, cart);
+      },
+      function(result, callback) {
+        Cart.findOneAndUpdate(
+          {'owner': req.session.passport.user},
+          {'contents': result}
+        ).exec(function(err) {
+          if (err) {
+            return next(err);
+          };
+
+          callback(null, 'done')
+        });
+      }
+    ], (err, result) => {
+      if (err) {
+        return next(err);
+      };
+
+      
+      res.redirect('/cart');
+    })
   };
 };
 
