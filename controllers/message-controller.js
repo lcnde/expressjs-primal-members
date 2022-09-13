@@ -24,7 +24,6 @@ exports.message_post = [
   // validate and sanitize
   body('message')
     .not().isEmpty().withMessage('Message can not be empty.')
-    // .isLength({max: 3}).withMessage('just a test delete this')
     .trim()
     .escape(),
 
@@ -33,21 +32,16 @@ exports.message_post = [
 
     //check for errors
     const errors = validationResult(req);
-
     // save the message content so if the page reloads you can serve it back to the user
-    var messageContent = req.body.message
 
+    console.log(errors)
+    
     if (!errors.isEmpty()) {
       // there are errors so reload the page with the errors
-      res.render('talk-board',
-      {
-        err: errors.array(),
-        title: 'Primal | Talkboard',
-        message: messageContent
-      });
+      res.redirect('talk-board')
       return;
     }
-
+    
     // success, no errors found
     User.findOne({ '_id': req.session.passport.user })
       .exec((err, user) => {
@@ -73,8 +67,6 @@ exports.message_post = [
 
         res.redirect('talk-board');
       })
-
-            
       
     });
   }
